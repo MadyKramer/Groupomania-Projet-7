@@ -1,0 +1,48 @@
+@import "./_variables";
+
+.bigContainer{
+    background-color: $red;
+    display: flex;
+    justify-content: center;
+    
+    .mainWrapper{
+        background-color: #fff;
+        width: 65%;
+        padding-bottom: 2%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+        .logoLog{
+            margin-left: auto;
+            margin-right: auto;
+            width: 70%;
+        }
+        .logBtns{
+            display: flex;
+            justify-content: center;
+            margin-bottom: 0%;
+        }
+        .logBtn{
+            color: $night;
+            font-size: 20px;
+            font-weight: bold;
+            padding: 2%;
+            width: 25%;
+            background-color: $chamalow;
+            border: none;
+            border-top: 2px solid $night;
+            border-left: 2px solid $night;
+            border-right: 2px solid $night;
+            border-radius: 15px 15px 0% 0%;
+            margin: 5% 5% 0% 5%;
+            transition-duration: 400ms;
+            &:hover{
+                opacity: 0.80;
+                color: $night;
+                cursor: pointer;
+                
+            }
+        }
+    }
+    
+}

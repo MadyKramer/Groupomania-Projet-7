@@ -1,0 +1,22 @@
+const yup = require("yup");
+
+const loginSchema = yup.object().shape({
+  email: yup
+    .string()
+    .required("Vous devez inscrire votre adresse mail pour vous connecter "),
+  password: yup.string().required("Pas de mot de passe, pas d'accès! 🔑 "),
+});
+
+module.exports = (req, res, next) => {
+  loginSchema
+    .validate({
+      email: req.body.email,
+      password: req.body.password,
+    })
+    .then(function(valid) {
+      next();
+    })
+    .catch(function (err) {
+      res.status(400).json({ message: err.errors });
+    });
+};
