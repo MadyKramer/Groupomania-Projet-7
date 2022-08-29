@@ -5,7 +5,7 @@ const validationSignup = require('../middlewares/validationSignup')
 const validationLogin = require('../middlewares/validationLogin')
 
 
-router.post('/signup', validationSignup, userCtrl.signup);
+router.post('/signup', /*validationSignup, */ userCtrl.signup);
 router.post('/login', validationLogin, userCtrl.login);
 
 

@@ -1,7 +1,6 @@
 // import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Cookies from 'js-cookie'
 import axios from "axios"
 
 const Login = () => {
@@ -28,8 +27,9 @@ const Login = () => {
           emailError.innerHTML = res.data.error.email; //A voir quand API connectée
           passwordError.innerHTML = res.data.error.password;
         } else {
+          localStorage.getItem("token", res.data.token)
+          console.log(res.data.token)
           navigate('/')
-          Cookies.set('token', res.data.token, { expires: 0.5 })
         }
       })
       .catch((err) => {

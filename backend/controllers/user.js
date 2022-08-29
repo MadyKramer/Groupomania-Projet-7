@@ -6,6 +6,7 @@ const auth = require("../middlewares/auth");
 
 
 exports.signup = (req, res, next) => {
+  
   bcrypt
     .hash(req.body.password, 10)
     .then((hash) => {

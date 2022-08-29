@@ -4,12 +4,13 @@ import { useNavigate } from "react-router-dom";
 
 //STATE
 const SignUp = () => {
-  const [firstName, setFirstName] = useState("");
-  const [lastName, setLastName] = useState("");
+  const [firstname, setFirstName] = useState("");
+  const [lastname, setLastName] = useState("");
   const [workstation, setWorkstation] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const navigate = useNavigate()
+  
+
 
   //COMPORTEMENTS
   const handleRegistrer = async (e) => {
@@ -24,8 +25,8 @@ const SignUp = () => {
       method: "post",
       url: `${process.env.REACT_APP_API_URL}api/auth/signup`,
       data: {
-        firstName,
-        lastName,
+        firstname,
+        lastname,
         workstation,
         email,
         password,
@@ -33,16 +34,18 @@ const SignUp = () => {
     })
       .then((res) => {
         if (res.data.errors) {
-          firstNameError.innerHTML = res.data.error.firstName;
-          lastNameError.innerHTML = res.data.error.lastName;
+          firstNameError.innerHTML = res.data.error.firstname; //CamelCase? 
+          lastNameError.innerHTML = res.data.error.lastname; //CamelCase?
           workstationError.innerHTML = res.data.error.workstation;
           emailError.innerHTML = res.data.error.email;
           passwordError.innerHTML = res.data.error.password;
         } else {
-          navigate('/')
+          alert("Vous êtes bien enregistré(e)! Veuillez vous connecter pour avoir accès à votre espace")
+          //redirection composant Login? 
         }
       })
       .catch((err) => console.log(err));
+       
   };
 
   //RENDER
@@ -62,7 +65,7 @@ const SignUp = () => {
         type="text"
         placeholder="Prénom"
         onChange={(e) => setFirstName(e.target.value)}
-        value={firstName}
+        value={firstname}
       />
       <div className="firstName error"></div>
       <br />
@@ -74,7 +77,7 @@ const SignUp = () => {
         type="text"
         placeholder="Nom"
         onChange={(e) => setLastName(e.target.value)}
-        value={lastName}
+        value={lastname}
       />
       <div className="lastName error"></div>
       <br />

@@ -16,7 +16,7 @@ exports.getAll = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   const formatDate = misc.formatDate();
-  console.log(req.body.userId);
+  
   //Si image reçue
   if (req.file !== undefined) {
     const imgUrl = `./images/${req.file.filename}`;
@@ -66,7 +66,6 @@ exports.create = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  console.log("ca rentre dans la fonction");
   const userId = misc.getUserId(req);
   const hasRight = misc.hasRight(req);
   database.query(
