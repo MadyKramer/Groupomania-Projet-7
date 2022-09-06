@@ -1,0 +1,103 @@
+@import "./_variables";
+
+.post {
+  background-color: $chamalow;
+  margin: 2% 9%;
+  border-radius: 15px 15px 15px 15px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px, rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+  
+  .postHeader {
+    background-color: $red;
+    display: flex;
+    justify-content: space-between;
+    color: #fff;
+    padding: 0px 8px;
+    border-radius: 15px 15px 0px 0px;
+    border: 1px solid $night;
+  }
+  .contentContainer {
+    margin: 5% 3%;
+    border: 1px solid $night;
+    border-radius: 15px 15px;
+
+    .postContent {
+      
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #fff;
+      border-radius: 15px 15px 0px 0px;
+      p {
+        text-align: center;
+      }
+     img{
+      max-width: 50%;
+      max-height: 75%;
+     }
+    }
+    .postReacts {
+      background-color: #fff;
+      display: flex;
+      justify-content: flex-end;
+
+      .postIcons{
+        color: $red;
+        padding: 5px; 
+        size: "lg";
+        transition: all 300ms;
+        opacity: 0.5;
+
+        &:hover{
+          opacity: 1;
+          transform: scale(1.15);
+        }
+        
+        
+      }
+    }
+    .writeComment {
+      display: flex;
+      background-color: #fff;
+      justify-content: space-between;
+      border-radius: 0 0 15px 15px;
+      border-top: 1px solid $night;
+      .sendImgComment{ //Repetion avec icon createPost
+        color: $night;
+        border: 2px solid $night;
+        border-radius: 50%;
+        padding: 4px;
+        position: relative;
+        top: 5px;
+        right: 5px;
+        transition: all 300ms;
+        &:hover {
+          color: $red;
+          border: 2px solid $red; 
+          transform: scale(1.15);
+        }
+      }
+      .writeCommentInput {
+        height: 30px;
+        border-style: none;
+        width: 92%;
+        border-radius: 0 0 0 15px;
+        &:focus {
+          outline: none;
+        }
+        
+      }
+      .commentButton {
+        height: 40px;
+        background-color: $red;
+        color: #fff;
+        border-style: none;
+        border-radius: 0 0 15px 0;
+        padding-bottom: 10px;
+        transition: all 300ms;
+        &:hover{
+          background-color: $night;
+        }
+      }
+    }
+  }
+}

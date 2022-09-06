@@ -1,16 +1,19 @@
 // import axios from "axios";
 // import { useEffect } from "react";
+import CreatePost from "../components/CreatePost";
 import PostsContainer from "../components/PostsContainer";
 
 const Main = () => {
-    //STATE
+  //STATE
 
-    //COMPORTEMENT
+  //COMPORTEMENT
 
-    //RENDER
-    return(
-        < PostsContainer />
-    );
-  
+  //RENDER
+  return (
+    <div>
+      <CreatePost />
+      <PostsContainer />
+    </div>
+  );
 };
 export default Main;

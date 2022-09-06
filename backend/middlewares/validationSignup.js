@@ -3,7 +3,7 @@ const yup = require("yup");
 const signupSchema = yup.object().shape({
   email: yup
     .string()
-    .matches("[^@ \t\r\n]+@[^@ \t\r\n]+.[^@ \t\r\n]+/gm")
+    .matches("^[A-Za-z0-9._%+-]+@groupomania\.fr$+/gm") 
     .min(8)
     .max(150)
     .required("Veuillez nous renseigner une adresse mail 💌"),
@@ -42,6 +42,7 @@ module.exports = (req, res, next) => {
       next()
     })
     .catch(function (err) {
+      console.log(err);
       res.status(400).json({ message: err.errors });
     })
 };

@@ -9,8 +9,6 @@ const SignUp = () => {
   const [workstation, setWorkstation] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  
-
 
   //COMPORTEMENTS
   const handleRegistrer = async (e) => {
@@ -33,19 +31,20 @@ const SignUp = () => {
       },
     })
       .then((res) => {
-        if (res.data.errors) {
-          firstNameError.innerHTML = res.data.error.firstname; //CamelCase? 
-          lastNameError.innerHTML = res.data.error.lastname; //CamelCase?
+        if (res.data.error) {
+          firstNameError.innerHTML = res.data.error.firstname;
+          lastNameError.innerHTML = res.data.error.lastname;
           workstationError.innerHTML = res.data.error.workstation;
           emailError.innerHTML = res.data.error.email;
           passwordError.innerHTML = res.data.error.password;
         } else {
-          alert("Vous êtes bien enregistré(e)! Veuillez vous connecter pour avoir accès à votre espace")
-          //redirection composant Login? 
+          alert(
+            "Vous êtes bien enregistré(e)! Veuillez vous connecter pour avoir accès à votre espace"
+          );
+          //redirection composant Login?
         }
       })
       .catch((err) => console.log(err));
-       
   };
 
   //RENDER
