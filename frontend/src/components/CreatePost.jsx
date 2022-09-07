@@ -2,27 +2,50 @@ import { useState, useContext } from "react";
 import { UidContext } from "./AppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
-
+import axios from "axios";
 
 const CreatePost = () => {
   //STATE
+  const [errorMsg, setErrorMsg] = useState("");
+  const [postimg, setPostimg] = useState("");
+  const [content, setContent] = useState("");
+
   //COMPORTEMENTS
-  const whiteLogo = "../assets/icon-left-font-monochrome-white.png"
-  const user= useContext(UidContext);
-  console.log(UidContext)
-  const [writePost, setwritePost] = useState([]);
-  const handlecreatePost = async (e) => {
-    e.preventDefault();
-    /*const postContainerError = document.querySelector(".createPost.error"); <--- Faire req Axios et inclure innerHTML dans le .then()*/
-  };
+  const user = useContext(UidContext);
+  const token = localStorage.getItem("token");
+
+  const handleCreatePost = (e) => {
+    let postCreate = { content };
+    if (postimg.length !== 0) {
+      postCreate = new FormData();
+      postCreate.append("image", postimg[0]);
+      postCreate.append("content", JSON.stringify(content));
+    }
+    axios
+      .post(`${process.env.REACT_APP_API_URL}api/posts`, postCreate, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        setContent("");
+        setPostimg("");
+      })
+      .catch((err) => {
+        setErrorMsg("Coucou");
+      });
+    }
   //RENDER
   return (
     <div className="bigContainer">
-      <img src={whiteLogo} alt="" className="whiteLogo" />
+      {/* <img src={whiteLogo} alt="" className="whiteLogo" /> */}
       <div className="mainWrapper">
         <div className="createPostContainer">
           <div className="createPostContent">
-            <form action="" className="writeNews" onSubmit={handlecreatePost} id="createPostForm">
+            <form
+              action=""
+              className="writeNews"
+              onSubmit={handleCreatePost}
+              id="createPostForm"
+            >
               {/* PP */}
               <label htmlFor="createPost"></label>
               <input
@@ -30,15 +53,12 @@ const CreatePost = () => {
                 id="createPost"
                 className="createPostInput"
                 type="textarea"
-                placeholder={`Quoi de neuf ${user}?`}
-                onChange={(e) => setwritePost(e.target.value)}
-                value={writePost}
+                placeholder={`Quoi de neuf ${user.firstname}?`}
+                onChange={(e) => setContent(e.target.value)}
+                value={content}
               ></input>
               <div className="createPostOptions">
-                <FontAwesomeIcon
-                  icon={faImage}
-                  className="createPostIcon"
-                />
+                <FontAwesomeIcon icon={faImage} className="createPostIcon" />
                 <input
                   type="submit"
                   value="Postez!"
@@ -46,11 +66,13 @@ const CreatePost = () => {
                 ></input>
               </div>
             </form>
+            {errorMsg && <h3>{errorMsg}</h3>}
           </div>
         </div>
       </div>
     </div>
   );
-};
+}
+  
 
 export default CreatePost;

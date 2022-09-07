@@ -5,7 +5,7 @@ const env = require("dotenv").config();
 
 exports.getAll = (req, res, next) => {
   //A modif plus tard pour éviter de manipuler les données sensibles
-  database.query("SELECT * FROM `post`", (err, results, fields) => {
+  database.query("SELECT post.id,post.content,post.postdate,post.postimg,post.users_id,users.firstname,users.lastname,users.workstation,users.avatar from post INNER JOIN users ON post.users_id = users.id", (err, results, fields) => {
     if (err) {
       return res.status(404).json(err.sqlMessage);
     } else {

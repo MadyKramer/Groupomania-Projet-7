@@ -28,7 +28,7 @@ const Login = () => {
           passwordError.innerHTML = res.data.error.password;
         } else {
           localStorage.setItem("token", res.data.token)
-          console.log(res.data.token)
+          
           navigate('/')
         }
       })

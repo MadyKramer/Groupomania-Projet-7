@@ -1,4 +1,5 @@
 // import ReactDOM from 'react-dom'
+import { useState } from "react";
 
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
@@ -11,11 +12,15 @@ const Post = ({ post }) => {
   //destructuring pour arriver directement à l'entrée de l'obj == props.post
 
   //STATE
+  const [showComments, setShowComments] = useState(false);
   //COMPORTEMENT
   const imgUrl = `${process.env.REACT_APP_API_URL}${post.postimg}`;
   if ({ imgUrl } == null) {
     //?
     return "";
+  }
+  const handleCommentaire = () => {
+    setShowComments(!showComments);
   }
 
   //RENDER
@@ -23,8 +28,8 @@ const Post = ({ post }) => {
     <div className="post">
       <div className="postHeader">
         <div className="userInfos">
-          <p>nom prénom</p>
-          <p>poste</p>
+          <p>{post.firstname} {post.lastname}</p>
+          <p>{post.workstation}</p>
         </div>
         <div className="postDate">
           <p>{post.postdate}</p>
@@ -36,7 +41,7 @@ const Post = ({ post }) => {
           <p>{post.content}</p>
         </div>
         <div className="postReacts">
-          <FontAwesomeIcon icon={faMessage} className="postIcons" />
+          <FontAwesomeIcon icon={faMessage} className="postIcons" onClick={handleCommentaire} />
           <FontAwesomeIcon icon={faThumbsUp} className="postIcons " />
         </div>
         <div className="writeComment">
@@ -48,6 +53,7 @@ const Post = ({ post }) => {
           <button className="commentButton">Envoyer</button>
         </div>
       </div>
+      {showComments && <h2>Commentaires</h2> }
     </div>
   );
 };
