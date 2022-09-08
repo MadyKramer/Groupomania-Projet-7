@@ -21,17 +21,25 @@ const CreatePost = () => {
       postCreate.append("image", postimg[0]);
       postCreate.append("content", JSON.stringify(content));
     }
+    
     axios
-      .post(`${process.env.REACT_APP_API_URL}api/posts`, postCreate, {
+      .post(`${process.env.REACT_APP_API_URL}api/posts`, postCreate,{
         headers: { Authorization: `Bearer ${token}` },
+        
       })
+      
       .then((res) => {
+        console.log("bonbon")
         setContent("");
         setPostimg("");
+       
       })
       .catch((err) => {
-        setErrorMsg("Coucou");
+        setErrorMsg(err);
+        console.log("café");
+      
       });
+     
     }
   //RENDER
   return (
@@ -53,21 +61,23 @@ const CreatePost = () => {
                 id="createPost"
                 className="createPostInput"
                 type="textarea"
-                placeholder={`Quoi de neuf ${user.firstname}?`}
+                placeholder={`Quoi de neuf ?`}
                 onChange={(e) => setContent(e.target.value)}
                 value={content}
               ></input>
               <div className="createPostOptions">
                 <FontAwesomeIcon icon={faImage} className="createPostIcon" />
                 <input
+                  onClick={handleCreatePost}
                   type="submit"
                   value="Postez!"
                   className="postBtn"
                 ></input>
               </div>
             </form>
-            {errorMsg && <h3>{errorMsg}</h3>}
+            
           </div>
+          {errorMsg && <h3>{errorMsg}</h3>}
         </div>
       </div>
     </div>

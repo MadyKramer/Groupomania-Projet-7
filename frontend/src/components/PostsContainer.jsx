@@ -3,12 +3,13 @@ import axios from "axios";
 import Post from "./Post";
 
 
+
 const PostsContainer = () => {
   
   //STATES
   const [postList, setPostList] = useState([]);
   //COMPORTEMENT
-
+ 
   useEffect(() => {
     let token = localStorage.getItem("token");
     
