@@ -31,7 +31,7 @@ const PostsContainer = () => {
       <div className="mainWrapper">
       {postList.length > 0 &&
         postList
-          // .sort((a, b) => (a.created_at > b.created_at ? -1 : 1))
+          .sort((a, b) => (a.created_at > b.created_at ? -1 : 1))
           .map((post) => (
             <Post post={post} key={post.id} className="index" />
           ))}

@@ -18,7 +18,7 @@ exports.formatDate = () => {
     const hours = fullDate.getHours();
     const minutes = fullDate.getMinutes();
     const seconds = fullDate.getSeconds();
-    return `${year}-${month}-${days} ${hours}:${minutes}:${seconds}`
+    return `${year},${month},${days} ${hours}:${minutes}:${seconds}`
 }
 
 exports.hasRight = (req) => {

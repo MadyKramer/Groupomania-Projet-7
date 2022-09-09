@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import { UidContext } from "./AppContext";
+import { UserContext } from "./AppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -11,10 +11,11 @@ const CreatePost = () => {
   const [content, setContent] = useState("");
 
   //COMPORTEMENTS
-  const user = useContext(UidContext);
+  const user = useContext(UserContext);
   const token = localStorage.getItem("token");
 
   const handleCreatePost = (e) => {
+    console.log('On récupère', user)
     let postCreate = { content };
     if (postimg.length !== 0) {
       postCreate = new FormData();
@@ -32,12 +33,10 @@ const CreatePost = () => {
         console.log("bonbon")
         setContent("");
         setPostimg("");
-       
       })
       .catch((err) => {
         setErrorMsg(err);
         console.log("café");
-      
       });
      
     }

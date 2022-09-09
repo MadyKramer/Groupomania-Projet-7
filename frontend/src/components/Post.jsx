@@ -6,9 +6,9 @@ import {
   faMessage,
   faImage,
 } from "@fortawesome/free-solid-svg-icons";
-import TimeAgo from 'react-timeago'
-import frenchStrings from 'react-timeago/lib/language-strings/fr'
-import buildFormatter from 'react-timeago/lib/formatters/buildFormatter'
+import TimeAgo from "react-timeago"
+import frenchStrings from "react-timeago/lib/language-strings/fr"
+import buildFormatter from "react-timeago/lib/formatters/buildFormatter"
 
 const Post = ({ post }) => {
   //destructuring pour arriver directement à l'entrée de l'obj == props.post
@@ -35,7 +35,7 @@ const Post = ({ post }) => {
           <p>{post.workstation}</p>
         </div>
         <div className="postDate">
-        <TimeAgo date={post.postdate} formatter={formatter} />
+        {/* <TimeAgo date={post.postdate} formatter={formatter} /> */}
         </div>
       </div>
       <div className="contentContainer">
