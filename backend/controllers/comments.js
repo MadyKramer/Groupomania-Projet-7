@@ -6,10 +6,11 @@ const jwt = require("jsonwebtoken");
 exports.getAll = (req, res, next) => {
   database.query(
     "SELECT * FROM comments WHERE post_id=? AND comments.users_id",
+    // "SELECT comments.id,comments.commentcontent,comments.commentimg,comments.users_id,users.firstname,users.lastname,users.avatar from comments INNER JOIN users ON comments.users_id = users.id",
     [req.params.post_id],
     (err, result, fields) => {
       if (err) {
-        return res.status(400).json({message: err.sqlMessage});
+        return res.status(400).json({message: "Erreur dans la récupération des commentaires"});
       } else {
         return res.status(200).json(result);
       }
@@ -25,7 +26,7 @@ exports.create = (req, res, next) => {
     [formatDate, userId, req.body.post_id, req.body.commentcontent],
     (err, result, fields) => {
       if (err) {
-        return res.status(400).json({message: err.sqlMessage});
+        return res.status(400).json({message: "Le message n'a pas été correctement posté"});
       } else {
         return res.status(201).json(result);
       }
@@ -78,7 +79,7 @@ exports.delete = (req, res, next) => {
               database.query(
                 "DELETE FROM `comments` WHERE id=?", [req.params.comments_id], (err, result, fields) => {
                     if(err){
-                        return res.status(400).json({message: err.sqlMessage})
+                        return res.status(400).json({message: "Le message n'a pas été supprimé! "})
                     }else{
                         return res.status(200).json({message: "Commentaire supprimé!✨"})
                     

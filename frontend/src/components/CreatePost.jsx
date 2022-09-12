@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
-import { UserContext } from "./AppContext";
+
+// import { UserContext } from "./AppContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -9,34 +10,33 @@ const CreatePost = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [postimg, setPostimg] = useState("");
   const [content, setContent] = useState("");
+  const [userId, setUserId] = useState("");
 
   //COMPORTEMENTS
-  const user = useContext(UserContext);
+  // const user = useContext(UserContext);
   const token = localStorage.getItem("token");
 
+
   const handleCreatePost = (e) => {
-    console.log('On récupère', user)
     let postCreate = { content };
     if (postimg.length !== 0) {
       postCreate = new FormData();
+      postCreate.append("userId", userId)
       postCreate.append("image", postimg[0]);
       postCreate.append("content", JSON.stringify(content));
     }
     
     axios
       .post(`${process.env.REACT_APP_API_URL}api/posts`, postCreate,{
-        headers: { Authorization: `Bearer ${token}` },
-        
+        headers: { Authorization: `Bearer ${token}`},
       })
-      
       .then((res) => {
-        console.log("bonbon")
+        setUserId("")
         setContent("");
         setPostimg("");
       })
       .catch((err) => {
         setErrorMsg(err);
-        console.log("café");
       });
      
     }
