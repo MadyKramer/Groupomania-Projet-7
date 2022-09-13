@@ -28,7 +28,8 @@ const Post = ({ post }) => {
     //?
     return "";
   }
-  const handleCommentaire = () => {
+  const handleComment = () => {
+    console.log(post.id)
     setShowComments(!showComments);
   }
 
@@ -69,7 +70,7 @@ const Post = ({ post }) => {
           {errorMsg && <h3>{errorMsg}</h3>}
         </div>
         <div className="postReacts">
-          <FontAwesomeIcon icon={faMessage} className="postIcons" onClick={handleCommentaire} />
+          <FontAwesomeIcon icon={faMessage} className="postIcons" onClick={handleComment} />
           <FontAwesomeIcon icon={faThumbsUp} className="postIcons " />
         </div>
         <div className="writeComment">
@@ -81,7 +82,7 @@ const Post = ({ post }) => {
           <button className="commentButton">Envoyer</button>
         </div>
       </div>
-      {showComments && <CommentsContainer /> }
+      {showComments && <CommentsContainer post={post} /> }
     </div>
   );
 };

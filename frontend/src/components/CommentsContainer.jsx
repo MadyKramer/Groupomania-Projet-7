@@ -2,13 +2,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Comment from "./Comment";
 
-const CommentsContainer = ({ postId }) => { // == postId.post
+const CommentsContainer = ({ post }) => { // == props.comment
     //STATE
     const [commentList, setCommentList] = useState([]);
     //COMPORTEMENT
     useEffect(() => {
       
         let token = localStorage.getItem("token");
+        console.log(post.id)
         const config = {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -16,16 +17,18 @@ const CommentsContainer = ({ postId }) => { // == postId.post
         };
       
         axios
-          .get(`${process.env.REACT_APP_API_URL}api/posts/${postId}/comments/getAll`, config)
+          .get(`${process.env.REACT_APP_API_URL}api/posts/${post.id}/comments/getAll`, config)
           .then((res) => {
             setCommentList(res.data)
           console.log( res.data)});
-      }, [postId])
+      }, [post])
+      
     //RENDER
     return(
         <div className="commentsWrapper">
     {commentList.length > 0 &&
     commentList.map((comment) => (
+      
         <Comment comment={comment} key={comment.id} />
       ))}
       </div>

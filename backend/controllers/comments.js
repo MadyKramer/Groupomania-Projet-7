@@ -5,8 +5,7 @@ const jwt = require("jsonwebtoken");
 
 exports.getAll = (req, res, next) => {
   database.query(
-    "SELECT * FROM comments WHERE post_id=? AND comments.users_id",
-    // "SELECT comments.id,comments.commentcontent,comments.commentimg,comments.users_id,users.firstname,users.lastname,users.avatar from comments INNER JOIN users ON comments.users_id = users.id",
+    "SELECT comments.id,comments.commentcontent,comments.commentimg,comments.users_id,users.firstname,users.lastname,users.avatar from comments INNER JOIN users ON comments.users_id = users.id WHERE post_id=? AND comments.users_id",
     [req.params.post_id],
     (err, result, fields) => {
       if (err) {
