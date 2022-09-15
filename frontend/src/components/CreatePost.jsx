@@ -10,18 +10,21 @@ const CreatePost = () => {
   const [errorMsg, setErrorMsg] = useState("");
   const [postimg, setPostimg] = useState("");
   const [content, setContent] = useState("");
-  const [userId, setUserId] = useState("");
+
+
 
   //COMPORTEMENTS
   // const user = useContext(UserContext);
   const token = localStorage.getItem("token");
+  
 
 
   const handleCreatePost = (e) => {
+    e.preventDefault();
     let postCreate = { content };
     if (postimg.length !== 0) {
       postCreate = new FormData();
-      postCreate.append("userId", userId)
+      
       postCreate.append("image", postimg[0]);
       postCreate.append("content", JSON.stringify(content));
     }
@@ -31,7 +34,7 @@ const CreatePost = () => {
         headers: { Authorization: `Bearer ${token}`},
       })
       .then((res) => {
-        setUserId("")
+       
         setContent("");
         setPostimg("");
       })

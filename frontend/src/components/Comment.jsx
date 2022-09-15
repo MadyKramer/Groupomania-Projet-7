@@ -1,11 +1,32 @@
-// import { useState } from "react";
+import { useState } from "react";
+import axios from "axios";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import {
+  faTrashCan,
+  faPenToSquare,
+} from "@fortawesome/free-solid-svg-icons";
 
-
-const Comment = ({ comment }) => {
+const Comment = ({ comment, post }) => {
   //== props.comment
   //STATE
-
+  const [errorMsg, setErrorMsg] = useState("");
   //COMPORTEMENT
+  const token = localStorage.getItem("token");
+  const handleDeleteComment = () => {
+    axios
+    .delete(`${process.env.REACT_APP_API_URL}api/posts/${post.id}/comments/${comment.id}`, {
+      headers: { Authorization: `Bearer ${token}` },
+      
+    })
+    console.log(`ça c'est l'id du post: ${post.id}`)
+    .then((res) => {
+      alert("commentaire supprimé ! ✨");
+    })
+    .catch((err) => {
+      setErrorMsg(err);
+  
+    });
+  }
 
   //RENDER
   return (
@@ -16,9 +37,19 @@ const Comment = ({ comment }) => {
             {comment.firstname} {comment.lastname}
           </p>
         </div>
+        <div className="handleCommentsIcons">
+          <FontAwesomeIcon icon={faPenToSquare} className="handleComment" />
+          <FontAwesomeIcon
+            icon={faTrashCan}
+            className="handleComment"
+            onClick={handleDeleteComment}
+            
+          />
+        </div>
       </div>
       <div className="commentContent">
         <p>{comment.commentcontent}</p>
+        {errorMsg && <h3>{errorMsg}</h3>}
       </div>
     </div>
   );

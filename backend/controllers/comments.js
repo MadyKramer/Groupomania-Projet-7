@@ -19,10 +19,10 @@ exports.getAll = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   const formatDate = misc.formatDate();
-  const userId = misc.getUserId(req);
+ 
   database.query(
     "INSERT INTO `comments` (`commentdate`, `users_id`, `post_id`, `commentcontent`) VALUES (?, ?, ?, ?)",
-    [formatDate, userId, req.body.post_id, req.body.commentcontent],
+    [formatDate, req.userId, req.body.post_id, req.body.commentcontent],
     (err, result, fields) => {
       if (err) {
         return res.status(400).json({message: "Le message n'a pas été correctement posté"});
@@ -35,14 +35,14 @@ exports.create = (req, res, next) => {
 
 exports.edit = (req, res, next) => {
   
-  const userId = misc.getUserId(req);
+  
   const hasRight = misc.hasRight(req);
   database.query(
     "SELECT * FROM `comments` WHERE id=?",
     [req.params.comments_id],
     (err, result, fields) => {
       
-      if (result[0].users_id === userId || hasRight === 1){
+      if (result[0].users_id === req.userId || hasRight === 1){
         
         database.query(
           "UPDATE `comments` SET commentcontent=? WHERE id=?",
@@ -69,12 +69,12 @@ exports.edit = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    const userId = misc.getUserId(req)
+    
     const hasRight = misc.hasRight(req)
     database.query(
         "SELECT * FROM `comments` WHERE id=?",
         [req.params.comments_id], (err, result, fields) => {
-            if(result[0].users_id === userId || hasRight === 1){
+            if(result[0].users_id === req.userId || hasRight === 1){
               database.query(
                 "DELETE FROM `comments` WHERE id=?", [req.params.comments_id], (err, result, fields) => {
                     if(err){

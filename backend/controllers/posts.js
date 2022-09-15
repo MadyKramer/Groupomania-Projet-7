@@ -5,30 +5,32 @@ const env = require("dotenv").config();
 
 exports.getAll = (req, res, next) => {
   //A modif plus tard pour éviter de manipuler les données sensibles
-  database.query("SELECT post.id,post.content,post.postdate,post.postimg,post.users_id,users.firstname,users.lastname,users.workstation,users.avatar from post INNER JOIN users ON post.users_id = users.id", (err, results, fields) => {
-    if (err) {
-      return res.status(404).json({message: "Une erreur est survenue"});
-    } else {
-      return res.status(200).json(results);
+  database.query(
+    "SELECT post.id,post.content,post.postdate,post.postimg,post.users_id,users.firstname,users.lastname,users.workstation,users.avatar from post INNER JOIN users ON post.users_id = users.id",
+    (err, results, fields) => {
+      if (err) {
+        return res.status(404).json({ message: "Une erreur est survenue" });
+      } else {
+        return res.status(200).json(results);
+      }
     }
-  });
+  );
 };
 
 exports.create = (req, res, next) => {
   const formatDate = misc.formatDate();
-  const userId = misc.getUserId(req);
+  console.log("decodedCreate", req.userId);
   //Si image reçue
   if (req.file !== undefined) {
-    
     const imgUrl = `./images/${req.file.filename}`;
     // & Si aucun contenu texte mais une image
     if (req.body.content === undefined) {
       database.query(
         "INSERT INTO `post` (`postdate`, `postimg`, `users_id`) VALUES (?, ?, ?)",
-        [formatDate, imgUrl, userId],
+        [formatDate, imgUrl, req.userId],
         (err, results, fields) => {
           if (err) {
-            return res.status(400).json({message: "Une erreur est survenue"});
+            return res.status(400).json({ message: "Une erreur est survenue" });
           } else {
             return res.status(201).json({ message: "Publié!" });
           }
@@ -38,11 +40,12 @@ exports.create = (req, res, next) => {
     } else {
       database.query(
         "INSERT INTO `post`(`postdate`, `postimg`, `content`, `users_id`) VALUES (?, ?, ?, ?)",
-        [formatDate, imgUrl, req.body.content, userId],
+        [formatDate, imgUrl, req.body.content, req.userId],
         (err, results, fields) => {
           if (err) {
             return res.status(400).json({ message: "Une erreur est survenue" });
           } else {
+            console.log(results);
             return res.status(201).json(results);
           }
         }
@@ -53,11 +56,11 @@ exports.create = (req, res, next) => {
   } else {
     database.query(
       "INSERT INTO `post` (`postdate`, `content`, `users_id`) VALUES (?, ?, ?)",
-      [formatDate, req.body.content, userId],
+      [formatDate, req.body.content, req.userId],
 
       (err, results, fields) => {
         if (err) {
-          return res.status(400).json({message: "Une erreur est survenue"});
+          return res.status(400).json({ message: "Une erreur est survenue" });
         } else {
           return res.status(201).json({ message: "results" });
         }
@@ -67,7 +70,6 @@ exports.create = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  const userId = misc.getUserId(req);
   const hasRight = misc.hasRight(req);
 
   database.query(
@@ -81,22 +83,23 @@ exports.delete = (req, res, next) => {
           .status(500)
           .json({ message: "La publication n'existe plus" });
       } else {
-        console.log(result[0].image)
-        if (result[0].image !== undefined) { //null ne fonctionne pas!
+        if (result[0].image !== undefined) {
+          //null ne fonctionne pas!
           //Et qu'il y a une image
-       
+
           const fileName = result[0].postimg.split("images/")[1];
           //Si la personne a les droits de delete
 
-          if (result[0].users_id === userId || hasRight === 1) {
-           
+          if (result[0].users_id === req.userId || hasRight === 1) {
             database.query(
               "DELETE FROM `post` WHERE id=?",
               [req.params.post_id],
               (err, result, fields) => {
                 if (err) {
                   //Si il y a une erreur
-                  return res.status(400).json({message: "Une erreur est survenue"});
+                  return res
+                    .status(400)
+                    .json({ message: "Une erreur est survenue" });
                 } else {
                   //On supprime aussi l'image de la BDD
                   if (fs.existsSync(`images/${fileName}`)) {
@@ -107,28 +110,27 @@ exports.delete = (req, res, next) => {
               }
             );
           } else if (err) {
-          
-            return res.status(400).json({message: "Une erreur est survenue"});
+            return res.status(400).json({ message: "Une erreur est survenue" });
           } else {
-
             return res.status(403).json({ message: "Requête non autorisée" });
           }
         } else {
-          if (result[0].users_id === userId || hasRight === 1) {
-      
+          if (result[0].users_id === req.userId || hasRight === 1) {
             database.query(
               "DELETE FROM `post` WHERE id=?",
               [req.params.post_id],
               (err, result, fields) => {
                 if (err) {
-                  return res.status(400).json({message: "Une erreur est survenue"});
+                  return res
+                    .status(400)
+                    .json({ message: "Une erreur est survenue" });
                 } else {
                   return res.status(200).json(result);
                 }
               }
             );
           } else if (err) {
-            return res.status(400).json({message: "Une erreur est survenue"});
+            return res.status(400).json({ message: "Une erreur est survenue" });
           } else {
             return res.status(403).json({ message: "Requête non autorisée" });
           }
@@ -140,8 +142,7 @@ exports.delete = (req, res, next) => {
 
 exports.edit = (req, res, next) => {
   //Pb à régler
-  
-  const userId = misc.getUserId(req);
+
   const hasRight = misc.hasRight(req);
   database.query(
     "SELECT * FROM `post` WHERE id=?",
@@ -155,7 +156,7 @@ exports.edit = (req, res, next) => {
           console.log("J'ai repéré ton image");
           fileName = result[0].image.split("images/")[1];
         }
-        if (result[0].users_Id === userId || hasRight === 1) {
+        if (result[0].users_Id === req.userId || hasRight === 1) {
           //const host = `${req.protocol}://${req.get("host")}`;
           if (req.file !== undefined) {
             const imgUrl = `images/${req.file.fileName}`;
@@ -167,7 +168,9 @@ exports.edit = (req, res, next) => {
               [imgUrl, req.body.content, req.params.post_id],
               (err, result, fields) => {
                 if (err) {
-                  return res.status(400).json({message: "Une erreur est survenue"});
+                  return res
+                    .status(400)
+                    .json({ message: "Une erreur est survenue" });
                 } else {
                   return res.status(200).json(result);
                 }
@@ -180,7 +183,9 @@ exports.edit = (req, res, next) => {
               [req.body.content, req.params.post_id],
               (err, result, fields) => {
                 if (err) {
-                  return res.status(400).json({message: "Une erreur est survenue"});
+                  return res
+                    .status(400)
+                    .json({ message: "Une erreur est survenue" });
                 } else {
                   return res.status(200).json(result);
                 }
@@ -189,7 +194,7 @@ exports.edit = (req, res, next) => {
           }
         }
       } else if (err) {
-        return res.status(400).json({message: "Une erreur est survenue"});
+        return res.status(400).json({ message: "Une erreur est survenue" });
       } else {
         console.log(result.length);
         return res
@@ -200,49 +205,52 @@ exports.edit = (req, res, next) => {
   );
 };
 
-exports.like = (req, res, next) => { //1 pour like 0 pour dislike
+exports.like = (req, res, next) => {
+  //1 pour like 0 pour dislike
 
-  const userId = misc.getUserId(req);
   database.query(
     "SELECT * FROM `likeposts` WHERE users_id=? AND post_id=?",
-    [userId, req.params.post_id],
+    [req.userId, req.params.post_id],
     (err, result, fields) => {
-      if (result.length === 0) { 
-        console.log(result)
-        //Si le user n'a pas voté
-        if (req.body.value === 1) {
-          console.log(req.body)
-          //Et qu'il vote
+      if (result.length === 0) { //Si le user n'a pas voté
+        console.log(result);
+        if (req.body.value === 1) { //Et qu'il vote
+          console.log(req.body);
           database.query(
             "INSERT INTO `likeposts`(users_id, post_id, value)VALUES(?, ?, ?)",
-            [userId, req.params.post_id, req.body.value],
+            [req.userId, req.params.post_id, req.body.value],
             (err, result, fields) => {
               if (err) {
-                return res.status(401).json({message: "Une erreur est survenue"});
+                return res
+                  .status(401)
+                  .json({ message: "Une erreur est survenue" });
               } else {
-                console.log("C'est okayyyyyyy")
+                console.log("C'est okayyyyyyy");
                 return res.status(200).json(result);
               }
             }
           );
         }
-      } else if (req.body.value === 0){ 
-          database.query(
-            "DELETE FROM `likeposts` WHERE users_id=? AND post_id=?", [userId, req.params.post_id],
-            (err, result, fields) => {
-              if (err) {
-                return res.status(400).json({message: "Une erreur est survenue"})
-              } else {
-                return res
-                  .status(200)
-                  .json({ message: "Vous n'aimez plus cette publication." });
-              }
+      } else if (req.body.value === 0) {
+        database.query(
+          "DELETE FROM `likeposts` WHERE users_id=? AND post_id=?",
+          [req.userId, req.params.post_id],
+          (err, result, fields) => {
+            if (err) {
+              return res
+                .status(400)
+                .json({ message: "Une erreur est survenue" });
+            } else {
+              return res
+                .status(200)
+                .json({ message: "Vous n'aimez plus cette publication." });
             }
-          );
-      }else if(err){
-        return res.status(400).json({message: "Une erreur est survenue"})
-      }else{
-        return res.status(403).json({message: "Oups!"})
+          }
+        );
+      } else if (err) {
+        return res.status(400).json({ message: "Une erreur est survenue" });
+      } else {
+        return res.status(403).json({ message: "Oups!" });
       }
     }
   );

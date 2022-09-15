@@ -1,4 +1,4 @@
-const misc = require("../util/functions");
+
 const database = require("../util/database");
 const env = require("dotenv").config();
 const fs = require("fs");
