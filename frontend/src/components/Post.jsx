@@ -16,20 +16,18 @@ import axios from "axios";
 
 const Post = ({ post }) => {
   //destructuring pour arriver directement à l'entrée de l'obj == props.post
-
+console.log(post)
   //STATE
   const [showComments, setShowComments] = useState(false);
   const [like, setLike] = useState(false);
   const [isLiked, setisLiked] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const [commentcontent, setCommentContent] = useState("");
-  const [commentimg, setCommentImg] = useState("");
   const [userId, setUserId] = useState("");
- 
 
   //COMPORTEMENT
   const formatter = buildFormatter(frenchStrings);
-  
+
   const token = localStorage.getItem("token");
   const imgUrl = `${process.env.REACT_APP_API_URL}${post.postimg}`;
   if ({ imgUrl } == null) {
@@ -54,21 +52,15 @@ const Post = ({ post }) => {
   };
 
   const sendComment = (e) => {
-    let commentCreate = { commentcontent };
-    if (commentcontent !== "") {
-      commentCreate = new FormData();
-      commentCreate.append("userId", userId);
-      commentCreate.append("commentimg", commentimg[0]);
-      commentCreate.append("commentcontent", JSON.stringify(commentcontent));
-      commentCreate.append("post_id", `${post.id}`);
-      for (let value of commentCreate.values()) {
-        console.log(value);
-     }
-    }
+    let body = {
+      userId: userId,
+      post_id: post.id,
+      commentcontent: commentcontent,
+    };
     axios
       .post(
         `${process.env.REACT_APP_API_URL}api/posts/${post.id}/comments`,
-        commentCreate,
+        body,
         {
           headers: { Authorization: `Bearer ${token}` },
         }
@@ -76,8 +68,6 @@ const Post = ({ post }) => {
       .then((res) => {
         console.log("commentaire posté!");
         setUserId("");
-        setCommentContent("");
-        setCommentImg("");
       })
       .catch((err) => {
         console.log("fail");
@@ -87,23 +77,24 @@ const Post = ({ post }) => {
 
   const handleLike = (e) => {
     let likeValue = like ? 0 : 1;
-    
-    setLike(!like)
-    setisLiked(current => !current)
-    axios.post(`${process.env.REACT_APP_API_URL}api/posts/${post.id}/like`,
-    {
-      value: likeValue,
-    },
-      { headers: { Authorization: `Bearer ${token}` },
-    }
-    )
-    .then((res)=> {
-      console.log(likeValue)
-    })
-    .catch((err) => {
-      console.log(err)
-    })
-  }
+
+    setLike(!like);
+    setisLiked((current) => !current);
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}api/posts/${post.id}/like`,
+        {
+          value: likeValue,
+        },
+        { headers: { Authorization: `Bearer ${token}` } }
+      )
+      .then((res) => {
+        console.log(likeValue);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
 
   //RENDER
   return (
@@ -140,7 +131,11 @@ const Post = ({ post }) => {
             className="postIcons"
             onClick={handleComment}
           />
-          <FontAwesomeIcon icon={faThumbsUp} className={isLiked ? "isLiked" : 'postIcons'} onClick={handleLike}  />
+          <FontAwesomeIcon
+            icon={faThumbsUp}
+            className={isLiked ? "isLiked" : "postIcons"}
+            onClick={handleLike}
+          />
         </div>
         <div className="writeComment">
           <input
@@ -148,7 +143,6 @@ const Post = ({ post }) => {
             placeholder="Ajouter un commentaire..."
             onChange={(e) => setCommentContent(e.target.value)}
           ></input>
-          <FontAwesomeIcon icon={faImage} className="sendImgComment" />
           <button className="commentButton" onClick={sendComment}>
             Envoyer
           </button>
