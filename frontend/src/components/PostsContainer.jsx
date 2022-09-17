@@ -6,7 +6,8 @@ import Post from "./Post";
 const PostsContainer = () => {
   //STATES
   const [postList, setPostList] = useState([]);
-  // const { refreshPost } = useContext(userContext)
+  const [updateUseEffect, setUpdateUseEffect] = useState(true);
+ 
   //COMPORTEMENT
 
   useEffect(() => {
@@ -21,8 +22,9 @@ const PostsContainer = () => {
       .get(`${process.env.REACT_APP_API_URL}api/posts/getAll`, config)
       .then((res) => {
         setPostList(res.data);
+        setUpdateUseEffect(false);
       });
-  }, [/*refreshPost*/]); //Re-Render?
+  }, [updateUseEffect]); //Re-Render?
 
   //RENDER
   return (

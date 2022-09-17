@@ -1,0 +1,23 @@
+.divUser{
+    display: flex;
+    flex-direction: column;
+
+    .userPic{
+        
+        padding: 8% 40%;
+        border-radius: 50%;
+    }
+    .userProperties{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        .userName{
+            color: $night;
+            font-size: 30px;
+        }
+        .userWork{
+            color: $night;
+            font-size: 26px;
+        }
+    }
+}

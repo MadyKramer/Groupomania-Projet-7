@@ -5,7 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
-const CreatePost = () => {
+
+const CreatePost = ({setUpdateUseEffect}) => {
   //STATE
   const [errorMsg, setErrorMsg] = useState("");
   const [postimg, setPostimg] = useState("");
@@ -24,7 +25,6 @@ const CreatePost = () => {
     let postCreate = { content };
     if (postimg.length !== 0) {
       postCreate = new FormData();
-      
       postCreate.append("image", postimg[0]);
       postCreate.append("content", JSON.stringify(content));
     }
@@ -34,7 +34,7 @@ const CreatePost = () => {
         headers: { Authorization: `Bearer ${token}`},
       })
       .then((res) => {
-       
+        setUpdateUseEffect(true);
         setContent("");
         setPostimg("");
       })

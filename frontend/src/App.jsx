@@ -4,13 +4,14 @@ import { ReactDOM } from "react";
 import { Routes, Route } from "react-router-dom";
 import Main from "./pages/Main";
 import Auth from "./pages/Auth";
-import axios from "axios";
+import Profile from "./pages/Profile";
+
 import { UserContext } from "./components/AppContext";
 import { useState, useEffect } from "react";
 
 const App = () => {
   //STATE
-  const [refreshPost, setRefreshPost] = useState(false);
+  // const [refreshPost, setRefreshPost] = useState(false);
   //COMPORTEMENT
 
   //RENDER
@@ -21,6 +22,7 @@ const App = () => {
         <Routes>
           <Route path="/" element={<Main />} />
           <Route path="connexion" element={<Auth />} />
+          <Route path="user" element={<Profile />} />
         </Routes>
       </>
     // </UserContext.Provider>

@@ -1,5 +1,5 @@
 // import axios from "axios";
-// import { useEffect } from "react";
+
 import CreatePost from "../components/CreatePost";
 import PostsContainer from "../components/PostsContainer";
 
