@@ -19,7 +19,7 @@ exports.getAll = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   const formatDate = misc.formatDate();
- 
+ console.log(req.body.commentcontent);
   database.query(
     "INSERT INTO `comments` (`commentdate`, `users_id`, `post_id`, `commentcontent`) VALUES (?, ?, ?, ?)",
     [formatDate, req.userId, req.body.post_id, req.body.commentcontent],

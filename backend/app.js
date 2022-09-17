@@ -15,6 +15,7 @@ const app = express();
 
 
 app.use((req, res, next) => {
+
   //console.log('app');
   //on indique que les ressources peuvent être partagées depuis n'importe quelle origine
   res.setHeader("Access-Control-Allow-Origin", "*");

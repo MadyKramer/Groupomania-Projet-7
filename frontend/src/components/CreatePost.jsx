@@ -15,7 +15,7 @@ const CreatePost = ({setUpdateUseEffect}) => {
 
 
   //COMPORTEMENTS
-  // const user = useContext(UserContext);
+ 
   const token = localStorage.getItem("token");
   
 

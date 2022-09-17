@@ -13,13 +13,13 @@ const Comment = ({ comment, post }) => {
   //COMPORTEMENT
   const token = localStorage.getItem("token");
   const handleDeleteComment = () => {
+   
     axios
     .delete(`${process.env.REACT_APP_API_URL}api/posts/${post.id}/comments/${comment.id}`, {
       headers: { Authorization: `Bearer ${token}` },
       
     })
-    console.log(`ça c'est l'id du post: ${post.id}`)
-    .then((res) => {
+    .then(res => {
       alert("commentaire supprimé ! ✨");
     })
     .catch((err) => {

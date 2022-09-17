@@ -9,7 +9,7 @@ const CommentsContainer = ({ post }) => {
   //COMPORTEMENT
   useEffect(() => {
     let token = localStorage.getItem("token");
-
+    console.log(post)
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -31,7 +31,7 @@ const CommentsContainer = ({ post }) => {
     <div className="commentsWrapper">
       {commentList.length > 0 &&
         commentList.map((comment) => (
-          <Comment comment={comment} key={comment.id} />
+          <Comment post={post} comment={comment} key={comment.id} />
         ))}
     </div>
   );

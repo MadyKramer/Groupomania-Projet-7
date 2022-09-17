@@ -11,6 +11,7 @@ const Main = () => {
   //RENDER
   return (
     <div>
+      
       <CreatePost />
       <PostsContainer />
     </div>

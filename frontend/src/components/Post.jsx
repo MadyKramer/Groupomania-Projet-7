@@ -61,6 +61,9 @@ const Post = ({ post }) => {
       commentCreate.append("commentimg", commentimg[0]);
       commentCreate.append("commentcontent", JSON.stringify(commentcontent));
       commentCreate.append("post_id", `${post.id}`);
+      for (let value of commentCreate.values()) {
+        console.log(value);
+     }
     }
     axios
       .post(
@@ -143,6 +146,7 @@ const Post = ({ post }) => {
           <input
             className="writeCommentInput"
             placeholder="Ajouter un commentaire..."
+            onChange={(e) => setCommentContent(e.target.value)}
           ></input>
           <FontAwesomeIcon icon={faImage} className="sendImgComment" />
           <button className="commentButton" onClick={sendComment}>
