@@ -1,49 +1,63 @@
 @import "./_variables";
 
-.bigContainer{
-    background-color: $red;
+body > #root > .bigContainer {
+  height: 100vh;
+}
+
+.bigContainer {
+  background-color: $red;
+  display: flex;
+  justify-content: center;
+
+  .mainWrapper {
+    background-color: #fff;
+    width: 60%;
+    padding-bottom: 2%;
     display: flex;
-    justify-content: center;
-   
-    
-    .mainWrapper{
-        background-color: #fff;
-        width: 65%;
-        padding-bottom: 2%;
-        display: flex;
-        justify-content: center;
-        flex-direction: column;
-        .logoLog{
-            margin-left: auto;
-            margin-right: auto;
-            width: 70%;
-        }
-        .logBtns{
-            display: flex;
-            justify-content: center;
-            margin-bottom: 0%;
-        }
-        .logBtn{
-            color: $night;
-            font-size: 20px;
-            font-weight: bold;
-            padding: 2%;
-            width: 25%;
-            background-color: $chamalow;
-            border: none;
-            border-top: 2px solid $night;
-            border-left: 2px solid $night;
-            border-right: 2px solid $night;
-            border-radius: 15px 15px 0% 0%;
-            margin: 5% 5% 0% 5%;
-            transition-duration: 400ms;
-            &:hover{
-                opacity: 0.80;
-                color: $night;
-                cursor: pointer;
-                
-            }
-        }
+    justify-content: flex-start;
+    flex-direction: column;
+    //Tablette
+    @media screen and (min-width: 601px) and (max-width: 1223px) {
+      padding-top: 5%;
+      width: 70%;
     }
-    
+    //Smartphones
+    @media screen and (max-width: 600px) {
+      width: 100%;
+      padding-top: 10%;
+    }
+    .logoLog {
+      margin-left: auto;
+      margin-right: auto;
+      width: 70%;
+    }
+    .logBtns {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 0%;
+    }
+    .logBtn {
+      color: $night;
+      font-size: 20px;
+      font-weight: bold;
+      padding: 2%;
+      width: 35%;
+      background-color: $chamalow;
+      border: none;
+      border-top: 2px solid $night;
+      border-left: 2px solid $night;
+      border-right: 2px solid $night;
+      border-radius: 15px 15px 0% 0%;
+      margin: 5% 5% 0% 5%;
+      transition-duration: 400ms;
+      &:hover {
+        opacity: 0.8;
+        color: $night;
+        cursor: pointer;
+      }
+      @media screen and (max-width: 600px) {
+        font-size: 16px;
+      }
+    }
+  }
 }

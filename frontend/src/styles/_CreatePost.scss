@@ -3,10 +3,18 @@
 .createPostContainer {
   
   background-color: $chamalow;
-  padding: 20px;
-  margin: 5% 5%;
+  padding: 14px;
+  margin: 5% ;
   border-radius: 40px;
   height: 100px;
+  box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
+    rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
+    @media screen and (max-width: 600px) {
+      height: 75px;
+    }
+    @media screen and (min-width: 601px) and (max-width: 1223px) {
+     margin: 3%;
+    }
 
   .createPostContent {
     background-color: #fff;
@@ -14,10 +22,16 @@
     height: 100px;
     border-radius: 20px;
     display: flex;
+    @media screen and (max-width: 600px) {
+      height: 70px;
+    }
     .writeNews {
       display: flex;
       justify-content: space-between;
       width: 100%;
+      @media screen and (max-width: 600px) {
+        height: 70px;
+      }
       .createPostInput {
         border-style: none;
         width: 80%; //A modifier (70) si on inclus la photo
@@ -26,6 +40,9 @@
         border-radius: 20px;
         &::placeholder {
           color: $night;
+          @media screen and (max-width: 1223px) {
+            padding-left: 5%;
+          }
         }
         &:focus {
           outline: none;
@@ -49,6 +66,11 @@
             border: 2px solid $red; 
             transform: scale(1.15);
           }
+          @media screen and (max-width: 600px) {
+            position: relative;
+            top:21px;
+            right:10px;
+          }
         }
         .postBtn {
           position: relative;
@@ -64,6 +86,12 @@
           &:hover {
             background-color: $night;
             border: 1px solid $night;
+          }
+          @media screen and (max-width: 600px) {
+            position: relative;
+            top:0px;
+            right:0px;
+            height: 71px;
           }
         }
       }

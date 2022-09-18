@@ -1,4 +1,4 @@
-import { useContext, useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 // import { userContext } from '../utils/Context'
 import axios from "axios";
 import Post from "./Post";
@@ -12,7 +12,6 @@ const PostsContainer = () => {
 
   useEffect(() => {
     let token = localStorage.getItem("token");
-    console.log("useEffect 2x de post");
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -33,8 +32,9 @@ const PostsContainer = () => {
         {postList.length > 0 &&
           postList
             // .sort((a, b) => (a.created_at > b.created_at ? -1 : 1))
+            
             .map((post) => (
-              <Post post={post} key={post.id} className="index" />
+               <Post post={post} key={post.id} className="index" />
             ))}
       </div>
     </div>

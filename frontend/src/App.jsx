@@ -20,8 +20,8 @@ const App = () => {
     // <UserContext.Provider value={refreshPost}>
       <>
         <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="connexion" element={<Auth />} />
+          <Route path="/" element={<Auth />} />
+          <Route path="feed" element={<Main />} />
           <Route path="user" element={<Profile />} />
         </Routes>
       </>

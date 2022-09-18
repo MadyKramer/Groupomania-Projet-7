@@ -6,7 +6,9 @@
   border-radius: 15px 15px 15px 15px;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 2px 5px -1px,
     rgba(0, 0, 0, 0.3) 0px 1px 3px -1px;
-
+  @media screen and (max-width: 600px) {
+    margin: 5% 0%;
+  }
   .postHeader {
     background-color: $red;
     display: flex;
@@ -15,6 +17,7 @@
     padding: 0px 8px;
     border-radius: 15px 15px 0px 0px;
     border: 1px solid $night;
+
     .userInfos {
       .workstationHeader {
         position: relative;
@@ -28,7 +31,7 @@
     }
   }
   .contentContainer {
-    margin: 5% 3%;
+    margin: 3% 3%;
     border: 1px solid $night;
     border-radius: 15px 15px;
 
@@ -41,6 +44,9 @@
       p {
         padding: 40px 0px;
         text-align: center;
+        @media screen and (max-width: 600px) {
+          padding: 5px 0px;
+        }
       }
       img {
         max-width: 50%;

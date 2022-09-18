@@ -15,11 +15,8 @@ const CreatePost = ({setUpdateUseEffect}) => {
 
 
   //COMPORTEMENTS
- 
-  const token = localStorage.getItem("token");
+ const token = localStorage.getItem("token");
   
-
-
   const handleCreatePost = (e) => {
     e.preventDefault();
     let postCreate = { content };

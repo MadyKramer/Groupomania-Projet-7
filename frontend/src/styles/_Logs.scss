@@ -17,12 +17,15 @@
     color: $night;
     font-size: 16px;
   }
+  @media screen and (min-width : 1224px){
+    padding: 4%;
+  }
+  
   .loginBtn {
     font-weight: bold;
     border: 2px solid $night;
     border-radius: 10px;
     width: 20%;
-    margin: 3%;
     background-color: $night;
     color: #fff;
     padding: 2%;
@@ -30,11 +33,13 @@
     &:hover {
       cursor: pointer;
       box-shadow: 2px 2px 2px #fff;
-      
       background-color: $red;
-      
-
     }
+    @media screen and (max-width: 600px){
+      font-size: 10px;
+      width: auto;
+      width: 30%;
+  }
   }
   input {
     border-radius: 10px;
@@ -46,6 +51,10 @@
     &::placeholder {
       color: $night;
       font-size: 18px;
+      @media screen and (max-width: 600px){
+        font-size: 14px;
+      }
     }
+    
   }
 }

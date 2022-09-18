@@ -27,7 +27,6 @@ console.log(post)
 
   //COMPORTEMENT
   const formatter = buildFormatter(frenchStrings);
-
   const token = localStorage.getItem("token");
   const imgUrl = `${process.env.REACT_APP_API_URL}${post.postimg}`;
   if ({ imgUrl } == null) {
@@ -77,7 +76,6 @@ console.log(post)
 
   const handleLike = (e) => {
     let likeValue = like ? 0 : 1;
-
     setLike(!like);
     setisLiked((current) => !current);
     axios
