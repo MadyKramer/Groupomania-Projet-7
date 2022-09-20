@@ -22,11 +22,12 @@ const CreatePost = () => {
     e.preventDefault();
     
     let postCreate = { content, postimg };  
-    console.log(postCreate.postimg[0])
-    if (postimg.length !== 0) {
+    console.log(postimg)
+    if (postimg.length > 0) {
+      console.log(postimg)
       postCreate = new FormData();
       postCreate.append("image", postimg[0]);
-      postCreate.append("content", JSON.stringify(content));
+      postCreate.append("content", content);
     }
     axios
       .post(`${process.env.REACT_APP_API_URL}api/posts`, postCreate,{
@@ -34,7 +35,7 @@ const CreatePost = () => {
       })
       .then((res) => {
        
-        setContent("");
+        // setContent("");
         setPostImg("");
       })
       .catch((err) => {
@@ -67,7 +68,7 @@ const CreatePost = () => {
               ></input>
               <div className="createPostOptions">
                 <span>
-                  <input type="file" id="sendImg" className="sendImg" ></input>
+                  <input type="file" id="sendImg" className="sendImg" onChange={(e) => setPostImg(e.target.files)}></input>
                   <label htmlFor="sendImg"><FontAwesomeIcon icon={faImage} className="createPostIcon" /></label>
                 </span>
                 <input

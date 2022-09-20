@@ -6,7 +6,7 @@ const env = require("dotenv").config();
 exports.getAll = (req, res, next) => {
   //A modif plus tard pour éviter de manipuler les données sensibles
   database.query(
-    "SELECT post.id,post.content,post.postdate,post.postimg,post.users_id,users.firstname,users.lastname,users.workstation,users.avatar from post INNER JOIN users ON post.users_id = users.id",
+    "SELECT post.id, post.content, post.postdate, post.postimg, post.users_id, users.firstname, users.lastname, users.workstation, users.avatar FROM likeposts lp INNER JOIN users ON lp.users_id = users.id INNER JOIN post ON lp.post_id = post.id",
     (err, results, fields) => {
       if (err) {
         return res.status(404).json({ message: "Une erreur est survenue" });
@@ -19,17 +19,20 @@ exports.getAll = (req, res, next) => {
 
 exports.create = (req, res, next) => {
   const formatDate = misc.formatDate();
-  console.log("decodedCreate", req.userId);
+  console.log(req.file);
+
   //Si image reçue
   if (req.file !== undefined) {
     const imgUrl = `./images/${req.file.filename}`;
     // & Si aucun contenu texte mais une image
-    if (req.body.content === undefined) {
+    if (req.body.content == undefined) {
       database.query(
         "INSERT INTO `post` (`postdate`, `postimg`, `users_id`) VALUES (?, ?, ?)",
         [formatDate, imgUrl, req.userId],
         (err, results, fields) => {
+          console.log(imgUrl)
           if (err) {
+
             return res.status(400).json({ message: "Une erreur est survenue" });
           } else {
             return res.status(201).json({ message: "Publié!" });

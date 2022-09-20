@@ -5,25 +5,30 @@ import { createPortal } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faXmark } from "@fortawesome/free-solid-svg-icons";
 
-const EditPost = ({ data, setDisplayModale }) => {
+const EditPost = ({ data, closeModale }) => {
   //STATE
-  const [editContent, setEditContent] = useState("");
-  const [editPostImg, setEditPostImg] = useState("");
+  const [editContent, setEditContent] = useState(data.content);
+  const [editImg, setEditImg] = useState("");
 
   //COMPORTEMENT
-  
+
   const token = localStorage.getItem("token");
   const handleEditPost = (e) => {
     e.preventDefault();
-    let postEdit = { content:"fdzf", postimg:"fbezuifbz" };
+    let postEdit = { editContent, editImg };
     console.log(postEdit);
     // if (postimg.length !== 0) {
     postEdit = new FormData();
-    //   postCreate.append("image", postimg[0]);
-    postEdit.append("content", JSON.stringify(editContent));
-    axios.put(`${process.env.REACT_APP_API_URL}api/posts/${data.id}`, postEdit, {
-      headers: { Authorization: `Bearer ${token}` },
-    });
+    
+    postEdit.append("image", editImg[0]);
+    postEdit.append("content", editContent);
+    axios.put(
+      `${process.env.REACT_APP_API_URL}api/posts/${data.id}`,
+      postEdit,
+      {
+        headers: { Authorization: `Bearer ${token}` },
+      }
+    );
   };
 
   //RENDER
@@ -31,7 +36,11 @@ const EditPost = ({ data, setDisplayModale }) => {
   return createPortal(
     <div className="modale-editPostContainer">
       <div className="contentModale">
-      <FontAwesomeIcon icon={faXmark} className="closeIcon" /*onClick={() => setDisplayModale(false)}*/ />
+        <FontAwesomeIcon
+          icon={faXmark}
+          className="closeIcon"
+          onClick={() => closeModale(false)}
+        />
         <div className="titleEdit">
           <h2>Quoi de neuf? 😃</h2>
         </div>
@@ -52,7 +61,17 @@ const EditPost = ({ data, setDisplayModale }) => {
             value={editContent}
           ></input>
           <div className="editPostOptions">
-            <FontAwesomeIcon icon={faImage} className="editPostIcon" />
+            <span>
+              <input
+                type="file"
+                id="editImg"
+                className="editImg"
+                onChange={(e) => setEditImg(e.target.files)}
+              ></input>
+              <label htmlFor="editImg">
+                <FontAwesomeIcon icon={faImage} className="editPostIcon" />
+              </label>
+            </span>
             <input
               //   onClick={handleCreatePost}
               type="submit"

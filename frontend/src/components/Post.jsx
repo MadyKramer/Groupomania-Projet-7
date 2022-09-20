@@ -122,8 +122,9 @@ const Post = ({ post }) => {
           </div>
            {imgUrl !== "http://localhost:4500/null" && <img src={imgUrl} alt="" />}
           <p>{post.content}</p>
-          {displayModale && <EditPost data={post}/> }
+          {displayModale && <EditPost data={post}  closeModale={setDisplayModale}/>  }
           {errorMsg && <h3>{errorMsg}</h3>}
+
         </div>
         <div className="postReacts">
           <FontAwesomeIcon
