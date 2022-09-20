@@ -140,70 +140,94 @@ exports.delete = (req, res, next) => {
   );
 };
 
-exports.edit = (req, res, next) => {
-  //Pb à régler
 
-  const hasRight = misc.hasRight(req);
+exports.edit = (req, res, next) => {
+ 
+  const hasRights = misc.hasRight(req);
   database.query(
-    "SELECT * FROM `post` WHERE id=?",
-    [req.params.post_id],
-    (err, result, fields) => {
-      //Recup dans le 2e if pour scope
-      let fileName;
-      console.log(result);
-      if (result.lenght > 0) {
-        if (result[0].image != undefined) {
-          console.log("J'ai repéré ton image");
-          fileName = result[0].image.split("images/")[1];
-        }
-        if (result[0].users_Id === req.userId || hasRight === 1) {
-          //const host = `${req.protocol}://${req.get("host")}`;
-          if (req.file !== undefined) {
-            const imgUrl = `images/${req.file.fileName}`;
-            if (fs.existsSync(`images/${fileName}`)) {
-              fs.unlinkSync(`images/${fileName}`);
-            }
-            database.query(
-              "UPDATE `post` SET `image`, `content` WHERE id=?",
-              [imgUrl, req.body.content, req.params.post_id],
-              (err, result, fields) => {
-                if (err) {
-                  return res
-                    .status(400)
-                    .json({ message: "Une erreur est survenue" });
-                } else {
-                  return res.status(200).json(result);
-                }
+     "SELECT * FROM post WHERE id=?",
+     [req.params.post_id],
+    (err, results, fields) => {
+        let filename;
+        if (results.length > 0) {
+           if (results[0].image != undefined) {
+              filename = results[0].image.split("images/")[1];
+           }
+           if (results[0].users_id === req.userId || hasRights === 1) {
+          
+              if (req.file !== undefined) {
+                 const imgUrl = `images/${req.file.filename}`;
+                 if (fs.existsSync(`images/${filename}`)) {
+                    fs.unlinkSync(`images/${filename}`);
+                 }
+                 database.query(
+                    "UPDATE `post` SET postimg=?, content=? WHERE id=?",
+                    [
+                      
+                       imgUrl,
+                       req.body.content,
+                       req.params.post_id,
+                    ],
+                    (err, results, fields) => {
+                       if (err) {
+                          return res
+                             .status(400)
+                             .json({ message: err.sqlMessage });
+                       } else {
+                          return res.status(200).json(results);
+                       }
+                    }
+                 );
+              } else if (req.file !== undefined) {
+                 const imgUrl = `images/${req.file.filename}`;
+                 database.query(
+                    "UPDATE `post` SET postimg=?, content=? WHERE id=?",
+                    [
+                       imgUrl,
+                       req.body.content,
+                       req.params.post_id,
+                    ],
+                    (err, results, fields) => {
+                       if (err) {
+                          return res
+                             .status(400)
+                             .json({ message: err.sqlMessage });
+                       } else {
+                          return res.status(200).json(results);
+                       }
+                    }
+                 );
+              } else {
+                 database.query(
+                    "UPDATE `post` SET content=? WHERE id=?",
+                    [
+                  
+                       req.body.content,
+                       req.params.post_id,
+                    ],
+                    function (err, results, fields) {
+                       if (err) {
+                          return res
+                             .status(400)
+                             .json({ message: err.sqlMessage });
+                       } else {
+                          return res.status(200).json(results);
+                       }
+                    }
+                 );
               }
-            );
-          } else {
-            console.log("On a vu que t'avais pas d'image! ");
-            database.query(
-              "UPDATE `post` SET content=? WHERE id=?",
-              [req.body.content, req.params.post_id],
-              (err, result, fields) => {
-                if (err) {
-                  return res
-                    .status(400)
-                    .json({ message: "Une erreur est survenue" });
-                } else {
-                  return res.status(200).json(result);
-                }
-              }
-            );
-          }
+           }
+        } else if (err) {
+           return res.status(400).json({ message: err.sqlMessage });
+        } else {
+           return res
+              .status(403)
+              .json({ message: "Cette publication n'existe plus" });
         }
-      } else if (err) {
-        return res.status(400).json({ message: "Une erreur est survenue" });
-      } else {
-        console.log(result.length);
-        return res
-          .status(200)
-          .json({ message: "Cette publication n'existe plus" });
-      }
-    }
+     }
   );
 };
+
 
 exports.like = (req, res, next) => {
   //1 pour like 0 pour dislike

@@ -51,6 +51,9 @@
       .createPostOptions {
         display: flex;
         justify-content: flex-end;
+        .test{
+          display: none;
+        }
 
         .createPostIcon {
           color: $night;
@@ -66,6 +69,7 @@
             border: 2px solid $red; 
             transform: scale(1.15);
           }
+          
           @media screen and (max-width: 600px) {
             position: relative;
             top:21px;

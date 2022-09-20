@@ -1,0 +1,55 @@
+.modale-editPostContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: $chamalow;
+    .contentModale{
+        display: flex;
+        justify-content: center;
+        
+        flex-direction: column;
+        width: 500px;
+        height: 500px;
+        background-color: white;
+        text-align: center;
+        border: 3px solid $night;
+        .closeIcon{
+            color: $red;
+            position: relative;
+            bottom: 40px;
+            left: 40%;
+            font-size: 24px;
+            
+        }
+        .titleEdit{
+            color: $night;
+        }
+        .editPostInput{
+            margin-top: 10%;
+            width: 60%;
+            height: 110px;
+            border: 2px solid $night;
+            border-radius: 15px;
+        }
+        .editPostOptions{
+            .postBtn{
+                margin: 5%;
+                padding: 12px;
+                border-radius: 10px;
+                color: #fff;
+                background-color: $night;
+                transition: all 300ms;
+                &:hover{
+                    opacity: 0.8;
+                  
+                }
+            }
+        }
+    }
+}

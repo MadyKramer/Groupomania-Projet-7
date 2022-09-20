@@ -12,7 +12,7 @@ router.delete("/:post_id", auth, postsCtrl.delete);
 router.get("/getAll", auth, postsCtrl.getAll);
 router.post("/:post_id/like", auth, postsCtrl.like);
 
-//+ Route pour Post By User?
+
 
 module.exports = router;
 

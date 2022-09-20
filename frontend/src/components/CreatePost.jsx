@@ -6,11 +6,12 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 
-const CreatePost = ({setUpdateUseEffect}) => {
+const CreatePost = () => {
   //STATE
   const [errorMsg, setErrorMsg] = useState("");
-  const [postimg, setPostimg] = useState("");
+  const [postimg, setPostImg] = useState("");
   const [content, setContent] = useState("");
+ 
 
 
 
@@ -19,26 +20,26 @@ const CreatePost = ({setUpdateUseEffect}) => {
   
   const handleCreatePost = (e) => {
     e.preventDefault();
-    let postCreate = { content };
+    
+    let postCreate = { content, postimg };  
+    console.log(postCreate.postimg[0])
     if (postimg.length !== 0) {
       postCreate = new FormData();
       postCreate.append("image", postimg[0]);
       postCreate.append("content", JSON.stringify(content));
     }
-    
     axios
       .post(`${process.env.REACT_APP_API_URL}api/posts`, postCreate,{
         headers: { Authorization: `Bearer ${token}`},
       })
       .then((res) => {
-        setUpdateUseEffect(true);
+       
         setContent("");
-        setPostimg("");
+        setPostImg("");
       })
       .catch((err) => {
         setErrorMsg(err);
       });
-     
     }
   //RENDER
   return (
@@ -65,7 +66,10 @@ const CreatePost = ({setUpdateUseEffect}) => {
                 value={content}
               ></input>
               <div className="createPostOptions">
-                <FontAwesomeIcon icon={faImage} className="createPostIcon" />
+                <span>
+                  <input type="file" id="sendImg" className="sendImg" ></input>
+                  <label htmlFor="sendImg"><FontAwesomeIcon icon={faImage} className="createPostIcon" /></label>
+                </span>
                 <input
                   onClick={handleCreatePost}
                   type="submit"

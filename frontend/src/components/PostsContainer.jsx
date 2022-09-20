@@ -6,7 +6,7 @@ import Post from "./Post";
 const PostsContainer = () => {
   //STATES
   const [postList, setPostList] = useState([]);
-  const [updateUseEffect, setUpdateUseEffect] = useState(true);
+
  
   //COMPORTEMENT
 
@@ -20,10 +20,11 @@ const PostsContainer = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}api/posts/getAll`, config)
       .then((res) => {
+
         setPostList(res.data);
-        setUpdateUseEffect(false);
+      
       });
-  }, [updateUseEffect]); //Re-Render?
+  }, []); //Re-Render?
 
   //RENDER
   return (

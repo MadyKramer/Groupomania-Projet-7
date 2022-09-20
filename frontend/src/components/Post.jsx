@@ -13,11 +13,13 @@ import frenchStrings from "react-timeago/lib/language-strings/fr";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 import CommentsContainer from "./CommentsContainer";
 import axios from "axios";
+import EditPost from "./EditPost";
 
 const Post = ({ post }) => {
   //destructuring pour arriver directement à l'entrée de l'obj == props.post
-console.log(post)
+
   //STATE
+  const [displayModale, setDisplayModale] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [like, setLike] = useState(false);
   const [isLiked, setisLiked] = useState(false);
@@ -29,10 +31,8 @@ console.log(post)
   const formatter = buildFormatter(frenchStrings);
   const token = localStorage.getItem("token");
   const imgUrl = `${process.env.REACT_APP_API_URL}${post.postimg}`;
-  if ({ imgUrl } == null) {
-    //?
-    return "";
-  }
+
+ 
   const handleComment = () => {
     setShowComments(!showComments);
   };
@@ -97,6 +97,7 @@ console.log(post)
   //RENDER
   return (
     <div className="post">
+      
       <div className="postHeader">
         <div className="userInfos">
           {/* <img src={post.avatar} alt="userpicture" /> */}
@@ -112,15 +113,16 @@ console.log(post)
       <div className="contentContainer">
         <div className="postContent">
           <div className="handlePostIcons">
-            <FontAwesomeIcon icon={faPenToSquare} className="handlePost" />
+            <FontAwesomeIcon icon={faPenToSquare} className="handlePost" onClick= {() => setDisplayModale(true)}/>
             <FontAwesomeIcon
               icon={faTrashCan}
               className="handlePost"
               onClick={handleDeletePost}
             />
           </div>
-          <img src={imgUrl} alt="" />
+           {imgUrl !== "http://localhost:4500/null" && <img src={imgUrl} alt="" />}
           <p>{post.content}</p>
+          {displayModale && <EditPost data={post}/> }
           {errorMsg && <h3>{errorMsg}</h3>}
         </div>
         <div className="postReacts">
