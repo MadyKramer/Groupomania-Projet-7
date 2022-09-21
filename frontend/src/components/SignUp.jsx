@@ -34,7 +34,6 @@ const SignUp = () => {
     })
       .then((res) => {
         if (res.data.error) {
-         
           firstNameError.innerHTML = res.data.error.firstname;
           lastNameError.innerHTML = res.data.error.lastname;
           workstationError.innerHTML = res.data.error.workstation;

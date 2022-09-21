@@ -1,4 +1,4 @@
 import { createContext } from "react";
 
-//Contrôle si le user est bien connecté en stockant le userId en haut de l'application + admin
+//Stock en haut de l'appli infos user (droits admin, avatar, nom prénom, poste occupé)
 export const UserContext = createContext();

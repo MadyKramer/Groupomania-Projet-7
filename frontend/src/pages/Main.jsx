@@ -12,7 +12,7 @@ const Main = () => {
   return (
     <div>
       
-      <CreatePost />
+      {/* <CreatePost /> */}
       <PostsContainer />
     </div>
   );

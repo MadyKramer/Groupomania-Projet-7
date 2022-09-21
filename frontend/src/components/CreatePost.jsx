@@ -5,14 +5,12 @@ import { faImage } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 
 
-const CreatePost = () => {
+const CreatePost = ({setReload, reload}) => {
   //STATE
   const [errorMsg, setErrorMsg] = useState("");
   const [postimg, setPostImg] = useState("");
   const [content, setContent] = useState("");
  
-
-
 
   //COMPORTEMENTS
  const token = localStorage.getItem("token");
@@ -36,7 +34,9 @@ const CreatePost = () => {
        
         setContent("");
         setPostImg("");
+        setReload(true);
         window.location.reload()
+
       })
       .catch((err) => {
         setErrorMsg(err);
