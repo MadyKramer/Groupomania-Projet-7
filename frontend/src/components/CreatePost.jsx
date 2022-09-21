@@ -1,6 +1,5 @@
-import { useState, useContext } from "react";
-
-// import { UserContext } from "./AppContext";
+import { useState} from "react";
+// import { UserContext } from '../utils/Context'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
@@ -17,7 +16,7 @@ const CreatePost = () => {
 
   //COMPORTEMENTS
  const token = localStorage.getItem("token");
-  
+
   const handleCreatePost = (e) => {
     e.preventDefault();
     
@@ -35,8 +34,9 @@ const CreatePost = () => {
       })
       .then((res) => {
        
-        // setContent("");
+        setContent("");
         setPostImg("");
+        window.location.reload()
       })
       .catch((err) => {
         setErrorMsg(err);

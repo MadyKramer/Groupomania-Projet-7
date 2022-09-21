@@ -1,3 +1,4 @@
-// import { createContext } from 'react'
+import { createContext } from "react";
 
-// export const userContext = createContext(null)
+//Contrôle si le user est bien connecté en stockant le userId en haut de l'application + admin
+export const UserContext = createContext();

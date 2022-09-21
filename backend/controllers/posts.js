@@ -4,9 +4,9 @@ const misc = require("../util/functions");
 const env = require("dotenv").config();
 
 exports.getAll = (req, res, next) => {
-  //A modif plus tard pour éviter de manipuler les données sensibles
+
   database.query(
-    "SELECT post.id, post.content, post.postdate, post.postimg, post.users_id, users.firstname, users.lastname, users.workstation, users.avatar FROM likeposts lp INNER JOIN users ON lp.users_id = users.id INNER JOIN post ON lp.post_id = post.id",
+"SELECT post.id,post.content,post.postdate,post.postimg,post.users_id,users.firstname,users.lastname,users.workstation,users.avatar from post INNER JOIN users ON post.users_id = users.id",
     (err, results, fields) => {
       if (err) {
         return res.status(404).json({ message: "Une erreur est survenue" });

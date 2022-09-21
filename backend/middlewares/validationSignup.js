@@ -1,48 +1,50 @@
 const yup = require("yup");
 
 const signupSchema = yup.object().shape({
-  email: yup
-    .string()
-    .matches("^[A-Za-z0-9._%+-]+@groupomania\.fr$+/gm") 
-    .min(8)
-    .max(150)
-    .required("Veuillez nous renseigner une adresse mail 💌"),
-    
 
-  password: yup
-    .string()
-    .matches(
-      "^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$"
-    ) //Minimum eight characters, at least one letter and one number
-    .max(255)
-    .required("Définissez ici votre mot de passe"),
 
-  lastname: yup
+  Firstname: yup.string().min(3).max(45).required("Quel est votre prénom?"),
+
+  Lastname: yup
     .string()
     .min(3)
     .max(45)
     .required("Quel est votre nom de famille?"),
-    
 
-  firstname: yup.string().min(3).max(45).required("Quel est votre prénom?"),
+  Workstation: yup.string().min(4).max(45).required("Quel poste occupez-vous?"),
 
-  workstation: yup.string().min(4).max(45).required("Quel poste occupez-vous?"),
+  Email: yup
+    .string()
+    .matches("^[A-Za-z0-9._%+-]+@groupomania.fr$")
+    .min(8)
+    .max(150)
+    .required("Veuillez nous renseigner une adresse mail 💌"),
+
+  Password: yup
+    .string()
+    .matches(/[a-zA-Z1-9]+/) 
+    .min(6)
+    .max(255)
+    .required("Définissez ici votre mot de passe"),
 });
 
 module.exports = (req, res, next) => {
+  console.log()
   signupSchema
     .validate({
-      email: req.body.email,
-      password: req.body.password,
-      lastname: req.body.lastname,
-      firstname: req.body.firstname,
-      workstation: req.body.workstation,
+      Firstname: req.body.firstname,
+      Lastname: req.body.lastname,
+      Workstation: req.body.workstation,
+      Email: req.body.email,
+      Password: req.body.password,
     })
     .then(function (valid) {
-      next()
+      
+      next();
+     
     })
     .catch(function (err) {
-      console.log(err);
       res.status(400).json({ message: err.errors });
-    })
+    });
 };
+

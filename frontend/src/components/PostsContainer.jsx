@@ -1,5 +1,5 @@
-import { useState, useEffect } from "react";
-// import { userContext } from '../utils/Context'
+import {useState, useEffect } from "react";
+// import { UserContext } from '../utils/Context'
 import axios from "axios";
 import Post from "./Post";
 
@@ -12,6 +12,7 @@ const PostsContainer = () => {
 
   useEffect(() => {
     let token = localStorage.getItem("token");
+  
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -20,11 +21,10 @@ const PostsContainer = () => {
     axios
       .get(`${process.env.REACT_APP_API_URL}api/posts/getAll`, config)
       .then((res) => {
-
         setPostList(res.data);
-      
+
       });
-  }, []); //Re-Render?
+  }, []); 
 
   //RENDER
   return (
@@ -32,8 +32,7 @@ const PostsContainer = () => {
       <div className="mainWrapper">
         {postList.length > 0 &&
           postList
-            // .sort((a, b) => (a.created_at > b.created_at ? -1 : 1))
-            
+            .sort((a, b) => (a.postdate > b.postdate ? -1 : 1))
             .map((post) => (
                <Post post={post} key={post.id} className="index" />
             ))}

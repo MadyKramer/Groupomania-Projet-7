@@ -19,7 +19,7 @@ exports.signup = (req, res, next) => {
           req.body.email,
           hash,
         ],
-        function (err, result, fields) {
+       (err, result, fields) => {
           if (err) {
             return res
               .status(400)
@@ -37,7 +37,7 @@ exports.login = (req, res, next) => {
   database.query(
     "SELECT * FROM users WHERE email = ?",
     [req.body.email],
-    function (err, result, fields) {
+    (err, result, fields) => {
       if (result[0] != undefined) {
         bcrypt
           .compare(req.body.password, result[0].password)

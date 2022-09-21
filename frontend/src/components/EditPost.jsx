@@ -27,8 +27,14 @@ const EditPost = ({ data, closeModale }) => {
       postEdit,
       {
         headers: { Authorization: `Bearer ${token}` },
-      }
-    );
+      })
+      .then((res) => {
+      alert("publication modifiée!");
+      window.location.reload()
+    })
+    .catch((err) => {
+      console.log("Une erreur s'est produite")
+    });
   };
 
   //RENDER
@@ -73,9 +79,8 @@ const EditPost = ({ data, closeModale }) => {
               </label>
             </span>
             <input
-              //   onClick={handleCreatePost}
               type="submit"
-              value="Postez!"
+              value="Postez"
               className="postBtn"
             ></input>
           </div>

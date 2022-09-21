@@ -21,6 +21,7 @@ const Comment = ({ comment, post }) => {
     })
     .then(res => {
       alert("commentaire supprimé ! ✨");
+      window.location.reload()
     })
     .catch((err) => {
       setErrorMsg(err);

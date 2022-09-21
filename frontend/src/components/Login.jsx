@@ -24,7 +24,7 @@ const Login = () => {
     })
       .then((res) => {
         if (res.data.errors) {
-          emailError.innerHTML = res.data.error.email; //A voir quand API connectée
+          emailError.innerHTML = res.data.error.email; 
           passwordError.innerHTML = res.data.error.password;
         } else {
           localStorage.setItem("token", res.data.token)

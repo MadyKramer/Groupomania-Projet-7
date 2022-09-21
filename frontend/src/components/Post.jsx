@@ -1,5 +1,6 @@
 // import ReactDOM from 'react-dom'
-import { useState } from "react";
+import { useContext, useState } from "react";
+import { UserContext } from "../utils/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThumbsUp,
@@ -26,6 +27,8 @@ const Post = ({ post }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [commentcontent, setCommentContent] = useState("");
   const [userId, setUserId] = useState("");
+  const isAdmin = useContext(UserContext);
+  console.log(isAdmin)
 
   //COMPORTEMENT
   const formatter = buildFormatter(frenchStrings);
@@ -44,6 +47,7 @@ const Post = ({ post }) => {
       })
       .then((res) => {
         alert("publication supprimée!");
+        window.location.reload()
       })
       .catch((err) => {
         setErrorMsg(err);

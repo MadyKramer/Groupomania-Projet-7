@@ -10,6 +10,13 @@ const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
+  const data = {
+    firstname,
+    lastname,
+    workstation,
+    email,
+    password,
+  }
   //COMPORTEMENTS
   const handleRegistrer = async (e) => {
     e.preventDefault();
@@ -18,20 +25,16 @@ const SignUp = () => {
     const workstationError = document.querySelector(".workstation.error");
     const emailError = document.querySelector(".email.error");
     const passwordError = document.querySelector(".password.error");
-
+    console.log(firstNameError.innerHTML);
+    
     axios({
       method: "post",
       url: `${process.env.REACT_APP_API_URL}api/auth/signup`,
-      data: {
-        firstname,
-        lastname,
-        workstation,
-        email,
-        password,
-      },
+      data 
     })
       .then((res) => {
         if (res.data.error) {
+         
           firstNameError.innerHTML = res.data.error.firstname;
           lastNameError.innerHTML = res.data.error.lastname;
           workstationError.innerHTML = res.data.error.workstation;
@@ -41,7 +44,6 @@ const SignUp = () => {
           alert(
             "Vous êtes bien enregistré(e)! Veuillez vous connecter pour avoir accès à votre espace"
           );
-          //redirection composant Login?
         }
       })
       .catch((err) => console.log(err));
