@@ -1,7 +1,7 @@
 // import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "axios"
+import axios from "axios";
 
 const Login = () => {
   //STATE
@@ -9,53 +9,56 @@ const Login = () => {
   const [password, setPassword] = useState("");
 
   //COMPORTEMENTS
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const handleLogin = (e) => {
     e.preventDefault();
     const emailError = document.querySelector(".email.error");
-    const passwordError = document.querySelector(".password.error");
+
     axios({
       method: "post",
       url: `${process.env.REACT_APP_API_URL}api/auth/login`,
       data: {
         email,
-        password
+        password,
       },
     })
       .then((res) => {
-        if (res.data.errors) {
-          emailError.innerHTML = res.data.error.email; 
-          passwordError.innerHTML = res.data.error.password;
-        } else {
-          localStorage.setItem("token", res.data.token)
-          navigate('/feed')
-        }
+        localStorage.setItem("token", res.data.token);
+        navigate("/feed");
       })
       .catch((err) => {
-        console.log(err);
+        console.log(err.response);
+        emailError.innerHTML = err.response.data.message;
       });
   };
-  
+
   //RENDER
   return (
-    <form action="" onSubmit={handleLogin} className="formWrapper" id="loginForm">
+    <form
+      action=""
+      onSubmit={handleLogin}
+      className="formWrapper"
+      id="loginForm"
+    >
       <label htmlFor="email">E-mail</label>
       <input
         name="email"
         id="email"
         type="email"
         placeholder="E-mail"
+        aria-label="Adresse email"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
         autoComplete="on"
       />
-      <div className="email error"></div>
+      <div className="email"></div>
       <br />
-      
+
       <label htmlFor="password">Mot de passe</label>
       <input
         name="password"
         id="password"
+        aria-label="mot de passe"
         type="password"
         placeholder="Mot de passe"
         onChange={(e) => setPassword(e.target.value)}

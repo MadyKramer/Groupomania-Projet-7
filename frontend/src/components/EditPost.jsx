@@ -16,26 +16,40 @@ const EditPost = ({ data, closeModale }) => {
   const handleEditPost = (e) => {
     e.preventDefault();
     let postEdit = { editContent, editImg };
-    console.log(postEdit);
-    // if (postimg.length !== 0) {
+    // if (editImg.length !== 0) {
     postEdit = new FormData();
-    
     postEdit.append("image", editImg[0]);
     postEdit.append("content", editContent);
-    axios.put(
-      `${process.env.REACT_APP_API_URL}api/posts/${data.id}`,
-      postEdit,
-      {
+    axios
+      .put(`${process.env.REACT_APP_API_URL}api/posts/${data.id}`, postEdit, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-      alert("publication modifiée!");
-      window.location.reload()
-    })
-    .catch((err) => {
-      console.log("Une erreur s'est produite")
-    });
+        alert("publication modifiée!");
+        window.location.reload();
+      })
+      .catch((err) => {
+        console.log("Une erreur s'est produite");
+      });
   };
+
+  // const handleDeleteImg = (e) => {
+  //   let body = {
+  //     image: "",
+  //     content: editContent,
+  //   };
+
+  //   axios
+  //     .put(`${process.env.REACT_APP_API_URL}api/posts/${data.id}`, body, {
+  //       headers: { Authorization: `Bearer ${token}` },
+  //     })
+  //     .then((res) => {
+  //       alert("publication modifiée!");
+  //     })
+  //     .catch((err) => {
+  //       console.log("Une erreur s'est produite");
+  //     });
+  // };
 
   //RENDER
 
@@ -45,10 +59,12 @@ const EditPost = ({ data, closeModale }) => {
         <FontAwesomeIcon
           icon={faXmark}
           className="closeIcon"
+          tabIndex="0"
           onClick={() => closeModale(false)}
+          aria-label="fermer l'éditeur"
         />
         <div className="titleEdit">
-          <h2>Quoi de neuf? 😃</h2>
+          <h2 tabIndex="0">Quoi de neuf? 😃</h2>
         </div>
         <label htmlFor="editPost"></label>
         <form
@@ -56,12 +72,14 @@ const EditPost = ({ data, closeModale }) => {
           className="editWriteNews"
           onSubmit={handleEditPost}
           id="editPostForm"
+          
         >
           <input
             name="editPost"
             id="editPost"
             className="editPostInput"
             type="textarea"
+            aria-label="modification du contenu"
             placeholder={` Quelque chose à ajouter? `}
             onChange={(e) => setEditContent(e.target.value)}
             value={editContent}
@@ -71,18 +89,18 @@ const EditPost = ({ data, closeModale }) => {
               <input
                 type="file"
                 id="editImg"
+                aria-label="changer l'image"
                 className="editImg"
                 onChange={(e) => setEditImg(e.target.files)}
               ></input>
               <label htmlFor="editImg">
-                <FontAwesomeIcon icon={faImage} className="editPostIcon" />
+                <FontAwesomeIcon icon={faImage} tabIndex="0" aria-label="Modifier l'image" className="editPostIcon" />
               </label>
             </span>
-            <input
-              type="submit"
-              value="Postez"
-              className="postBtn"
-            ></input>
+            <button className="deleteImgBtn" aria-label="supprimer l'image"/*onClick={(e) => handleDeleteImg()}*/>
+              Supprimer l'image
+            </button>
+            <input type="submit" value="Postez" className="postBtn" aria-label="envoyer"></input>
           </div>
         </form>
       </div>

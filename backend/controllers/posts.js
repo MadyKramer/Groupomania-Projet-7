@@ -17,60 +17,30 @@ exports.getAll = (req, res, next) => {
   );
 };
 
+
 exports.create = (req, res, next) => {
+  console.log(req.body.content)
+ 
   const formatDate = misc.formatDate();
-  console.log(req.file);
 
-  //Si image reçue
-  if (req.file !== undefined) {
-    const imgUrl = `./images/${req.file.filename}`;
-    // & Si aucun contenu texte mais une image
-    if (req.body.content == undefined) {
-      database.query(
-        "INSERT INTO `post` (`postdate`, `postimg`, `users_id`) VALUES (?, ?, ?)",
-        [formatDate, imgUrl, req.userId],
-        (err, results, fields) => {
-          console.log(imgUrl)
-          if (err) {
-
-            return res.status(400).json({ message: "Une erreur est survenue" });
-          } else {
-            return res.status(201).json({ message: "Publié!" });
-          }
-        }
-      );
-      //Si contenu texte et image
-    } else {
-      database.query(
-        "INSERT INTO `post`(`postdate`, `postimg`, `content`, `users_id`) VALUES (?, ?, ?, ?)",
-        [formatDate, imgUrl, req.body.content, req.userId],
-        (err, results, fields) => {
-          if (err) {
-            return res.status(400).json({ message: "Une erreur est survenue" });
-          } else {
-            console.log(results);
-            return res.status(201).json(results);
-          }
-        }
-      );
-    }
-
-    //Si pas image mais contenu
-  } else {
+  if (req.file == undefined && req.body.content == ""){
+    return res.status(400).json({message: "Veuillez ne pas envoyer de message vide."})
+  }else{
+    const imgUrl = req.file == undefined ? null : `./images/${req.file.filename}`;
+    const postcontent = req.body.content == undefined ? "" : req.body.content;
     database.query(
-      "INSERT INTO `post` (`postdate`, `content`, `users_id`) VALUES (?, ?, ?)",
-      [formatDate, req.body.content, req.userId],
-
-      (err, results, fields) => {
-        if (err) {
-          return res.status(400).json({ message: "Une erreur est survenue" });
-        } else {
-          return res.status(201).json({ message: "results" });
-        }
+    "INSERT INTO `post` (`postdate`, `content`, `users_id`, `postimg`) VALUES (?, ?, ?, ?)",
+    [formatDate, postcontent, req.userId, imgUrl],
+    (err, results, fields) => {
+      if (err) {
+        console.log(err)
+        return res.status(400).json({ message: "Une erreur est survenue" });
+      } else {
+        return res.status(201).json({ message: "results" });
       }
-    );
+    })
   }
-};
+}
 
 exports.delete = (req, res, next) => {
   const hasRight = misc.hasRight(req);
@@ -208,7 +178,7 @@ exports.edit = (req, res, next) => {
                        req.body.content,
                        req.params.post_id,
                     ],
-                    function (err, results, fields) {
+                    (err, results, fields) => {
                        if (err) {
                           return res
                              .status(400)
@@ -236,7 +206,7 @@ exports.like = (req, res, next) => {
   //1 pour like 0 pour dislike
 
   database.query(
-    "SELECT * FROM `likeposts` WHERE users_id=? AND post_id=?",
+    "SELECT likeposts.value FROM `likeposts` WHERE likeposts.users_id=? AND likeposts.post_id=?",
     [req.userId, req.params.post_id],
     (err, result, fields) => {
       if (result.length === 0) { //Si le user n'a pas voté
@@ -252,8 +222,8 @@ exports.like = (req, res, next) => {
                   .status(401)
                   .json({ message: "Une erreur est survenue" });
               } else {
-                console.log("C'est okayyyyyyy");
-                return res.status(200).json(result);
+             
+                return res.status(200).json({ message: "Vous aimez la publication"});
               }
             }
           );
@@ -282,3 +252,17 @@ exports.like = (req, res, next) => {
     }
   );
 };
+
+exports.getLike = (req, res, next) => {
+  database.query(
+    "SELECT likeposts.value FROM `likeposts` WHERE likeposts.post_id=?",
+    [req.params.post_id],
+    (err, results, fields) => {
+      if (err) {
+        return res.status(404).json({ message: "Une erreur est survenue" });
+      } else {
+        return res.status(200).json(results);
+      }
+    }
+  )
+}

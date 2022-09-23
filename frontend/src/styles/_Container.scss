@@ -9,11 +9,20 @@ body > #root > .bigContainer {
   background-color: $red;
   display: flex;
   justify-content: center;
-  
+
+  .whiteLogo{
+
+    height: 150px;
+    width: 150px;
+    position: absolute;
+    left: 86%;
+ 
+  }
 
   .mainWrapper {
+
     background-color: #fff;
-    width: 60%;
+    width: 65%;
     padding-bottom: 2%;
     display: flex;
     justify-content: flex-start;

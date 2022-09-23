@@ -1,23 +1,56 @@
-.divUser{
+.divUser {
+  padding-top: 30px;
+  position: absolute;
+  right: 75%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+
+
+  @media screen and (min-width: 1224px) {
+    position: absolute;
+    right: 82%;
+  }
+  @media screen and (min-width: 601px) and (max-width: 1223px) {
+    position: absolute;
+    right: 84%;
+  }
+  @media screen and (max-width: 600px) {
+    display: none;
+  }
+  .userPic {
+    width: 60%;
+
+    border-radius: 50%;
+  }
+  .userProperties {
+
     display: flex;
     flex-direction: column;
-
-    .userPic{
-        
-        padding: 8% 40%;
-        border-radius: 50%;
+    align-items: center;
+    color: white;
+    text-align: center;
+    .userName{
+        font-size: 20px;
     }
-    .userProperties{
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        .userName{
-            color: $night;
-            font-size: 30px;
-        }
-        .userWork{
-            color: $night;
-            font-size: 26px;
-        }
+    .userWork{
+        position: relative;
+        bottom: 30px;
+        font-size: 16px;
     }
+  }
+  .handleAccount{
+    margin-top: 10%;
+    display: flex;
+    flex-direction: column;
+   .handleAccountBtn{
+    background-color: #fff;
+    margin-bottom: 10%;
+    border: 2px solid $night;
+    border-radius: 10px;
+    padding: 10px;
+    cursor: pointer;
+   }
+  }
 }

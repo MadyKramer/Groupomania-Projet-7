@@ -23,7 +23,7 @@ exports.signup = (req, res, next) => {
           if (err) {
             return res
               .status(400)
-              .json({ message: "Veuillez remplir les champs nécéssaires" });
+              .json({ message: "On dirait qu'il y a une erreur dans votre inscription 🤔" });
           } else {
             return res.status(201).json(result);
           }
@@ -45,7 +45,7 @@ exports.login = (req, res, next) => {
             if (!valid) {
               return res
                 .status(401)
-                .json({ Message: "Votre mot de passe est incorrect" });
+                .json({ message:"On dirait que vos indentifiants sont incorrects 😟" });
             } else {
               res.status(200).json({
                 token: jwt.sign(
@@ -62,11 +62,11 @@ exports.login = (req, res, next) => {
               });
             }
           })
-          .catch((error) => res.status(500).json({ error }));
+          .catch((error) => res.status(500).json({ message:"On dirait que vos indentifiants sont incorrects 😟" }));
       } else {
         return res
           .status(404)
-          .json({ message: "Votre adresse mail n'est pas correcte" });
+          .json({ message: "On dirait que vos indentifiants sont incorrects 😟" });
       }
     }
   );

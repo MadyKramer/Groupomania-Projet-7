@@ -27,15 +27,14 @@ const Post = ({ post }) => {
   const [errorMsg, setErrorMsg] = useState("");
   const [commentcontent, setCommentContent] = useState("");
   const [userId, setUserId] = useState("");
-  const isAdmin = useContext(UserContext);
-  console.log(isAdmin)
+  const context = useContext(UserContext);
 
   //COMPORTEMENT
   const formatter = buildFormatter(frenchStrings);
   const token = localStorage.getItem("token");
   const imgUrl = `${process.env.REACT_APP_API_URL}${post.postimg}`;
 
- 
+
   const handleComment = () => {
     setShowComments(!showComments);
   };
@@ -47,7 +46,7 @@ const Post = ({ post }) => {
       })
       .then((res) => {
         alert("publication supprimée!");
-        window.location.reload()
+        window.location.reload();
       })
       .catch((err) => {
         setErrorMsg(err);
@@ -80,8 +79,10 @@ const Post = ({ post }) => {
 
   const handleLike = (e) => {
     let likeValue = like ? 0 : 1;
+    console.log(likeValue);
     setLike(!like);
     setisLiked((current) => !current);
+  
     axios
       .post(
         `${process.env.REACT_APP_API_URL}api/posts/${post.id}/like`,
@@ -97,47 +98,75 @@ const Post = ({ post }) => {
         console.log(err);
       });
   };
-
+  let handleBtn = null;
+  if (context.isAdmin === 1 || context.userId === post.users_id) {
+    handleBtn = (
+      <div className="handlePostIcons">
+        <FontAwesomeIcon
+          icon={faPenToSquare}
+          className="handlePost"
+          tabIndex="0"
+          aria-label="modification du poste"
+          onClick={() => setDisplayModale(true)}
+        />
+        <FontAwesomeIcon
+          icon={faTrashCan}
+          tabIndex="0"
+          className="handlePost"
+          aria-label="Supprimer le poste"
+          onClick={handleDeletePost}
+        />
+      </div>
+    );
+  } else {
+    handleBtn = "";
+  }
   //RENDER
   return (
     <div className="post">
-      
       <div className="postHeader">
         <div className="userInfos">
           {/* <img src={post.avatar} alt="userpicture" /> */}
-          <p>
+          <p tabIndex="0">
             {post.firstname} {post.lastname}
           </p>
-          <p className="workstationHeader">{post.workstation}</p>
+          <p className="workstationHeader" tabIndex="0">
+            {post.workstation}
+          </p>
         </div>
         <div className="postDate">
-          <TimeAgo date={post.postdate} formatter={formatter} />
+          <TimeAgo
+            date={post.postdate}
+            formatter={formatter}
+            tabIndex="0"
+            aria-label="date de publication"
+          />
         </div>
       </div>
       <div className="contentContainer">
         <div className="postContent">
-          <div className="handlePostIcons">
-            <FontAwesomeIcon icon={faPenToSquare} className="handlePost" onClick= {() => setDisplayModale(true)}/>
-            <FontAwesomeIcon
-              icon={faTrashCan}
-              className="handlePost"
-              onClick={handleDeletePost}
-            />
-          </div>
-           {imgUrl !== "http://localhost:4500/null" && <img src={imgUrl} alt="" />}
+          {handleBtn}
+          {imgUrl !== "http://localhost:4500/null" && (
+            <img src={imgUrl} alt="" />
+          )}
           <p>{post.content}</p>
-          {displayModale && <EditPost data={post}  closeModale={setDisplayModale}/>  }
+          {displayModale && (
+            <EditPost data={post} closeModale={setDisplayModale} />
+          )}
           {errorMsg && <h3>{errorMsg}</h3>}
-
         </div>
         <div className="postReacts">
           <FontAwesomeIcon
             icon={faMessage}
             className="postIcons"
+            tabIndex="0"
+            aria-label="Ouvrir la section commentaires"
             onClick={handleComment}
           />
           <FontAwesomeIcon
             icon={faThumbsUp}
+            aria-label="Liker la publication"
+            tabIndex="0"
             className={isLiked ? "isLiked" : "postIcons"}
             onClick={handleLike}
           />
@@ -145,10 +174,16 @@ const Post = ({ post }) => {
         <div className="writeComment">
           <input
             className="writeCommentInput"
+            aria-label="Ajouter un commentaire"
+            tabIndex="0"
             placeholder="Ajouter un commentaire..."
             onChange={(e) => setCommentContent(e.target.value)}
           ></input>
-          <button className="commentButton" onClick={sendComment}>
+          <button
+            className="commentButton"
+            aria-label="envoyer le commentaire"
+            onClick={sendComment}
+          >
             Envoyer
           </button>
         </div>

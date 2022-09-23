@@ -16,36 +16,28 @@ const SignUp = () => {
     workstation,
     email,
     password,
-  }
+  };
   //COMPORTEMENTS
   const handleRegistrer = async (e) => {
     e.preventDefault();
-    const firstNameError = document.querySelector(".firstName.error");
-    const lastNameError = document.querySelector(".lastName.error");
-    const workstationError = document.querySelector(".workstation.error");
-    const emailError = document.querySelector(".email.error");
-    const passwordError = document.querySelector(".password.error");
-    console.log(firstNameError.innerHTML);
-    
+    const error = document.querySelector(".errorMessage");
+    console.log(error)
+
     axios({
       method: "post",
       url: `${process.env.REACT_APP_API_URL}api/auth/signup`,
-      data 
+      data,
     })
       .then((res) => {
-        if (res.data.error) {
-          firstNameError.innerHTML = res.data.error.firstname;
-          lastNameError.innerHTML = res.data.error.lastname;
-          workstationError.innerHTML = res.data.error.workstation;
-          emailError.innerHTML = res.data.error.email;
-          passwordError.innerHTML = res.data.error.password;
-        } else {
-          alert(
-            "Vous êtes bien enregistré(e)! Veuillez vous connecter pour avoir accès à votre espace"
-          );
-        }
+        alert(
+          "Vous êtes bien enregistré(e)! Veuillez vous connecter pour avoir accès à votre espace"
+        );
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        console.log(err);
+        error.innerHTML = err.response.data.message;
+
+      });
   };
 
   //RENDER
@@ -56,68 +48,72 @@ const SignUp = () => {
       onSubmit={handleRegistrer}
       id="SignUpForm"
     >
+     <div className="errorMessage"></div>
       {/* <input name="avatar" id="avatar" className="avatar" type="file" /> */}
-      <label htmlFor="firstName"></label>
+      <label htmlFor="firstName"> Prénom </label>
       <input
         name="firstName"
         id="firstName"
         className="firstName"
         type="text"
         placeholder="Prénom"
+        aria-label="Prénom"
         onChange={(e) => setFirstName(e.target.value)}
         value={firstname}
       />
-      <div className="firstName error"></div>
       <br />
-      <label htmlFor="lastName"></label>
+      <label htmlFor="lastName"> Nom </label>
       <input
         name="lastName"
         id="lastName"
         className="lastName"
+        aria-label="Nom de famille"
         type="text"
         placeholder="Nom"
         onChange={(e) => setLastName(e.target.value)}
         value={lastname}
       />
-      <div className="lastName error"></div>
+
       <br />
-      <label htmlFor="workstation"></label>
+      <label htmlFor="workstation">Poste Occupé</label>
       <input
         name="workStation"
         id="workStation"
         className="workStation"
+        aria-label="poste occupé"
         type="text"
         placeholder="Poste Occupé"
         onChange={(e) => setWorkstation(e.target.value)}
         value={workstation}
       />
-      <div className="workstation error"></div>
+
       <br />
-      <label htmlFor="email"></label>
+      <label htmlFor="email">Email</label>
       <input
         name="email"
         id="email"
         className="email"
+        aria-label="email"
         type="email"
         placeholder="E-mail"
         onChange={(e) => setEmail(e.target.value)}
         value={email}
       />
-      <div className="email error"></div>
+
       <br />
-      <label htmlFor="password"></label>
+      <label htmlFor="password">Mot de passe</label>
       <input
         name="password"
         id="password"
         className="password"
+        aria-label="mot de passe"
         type="password"
         placeholder="Mot de passe"
         onChange={(e) => setPassword(e.target.value)}
         value={password}
       />
-      <div className="password error"></div>
       <br />
-      <input type="submit" value="Inscription" className="loginBtn"></input>
+      <input type="submit" value="Inscription" className="loginBtn" aria-label="Envoyer"></input>
     </form>
   );
 };

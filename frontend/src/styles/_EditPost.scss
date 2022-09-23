@@ -38,12 +38,23 @@
       border-radius: 15px;
     }
     .editPostOptions {
-      .postBtn {
-        margin: 5%;
+      .deleteImgBtn{
+        
         padding: 12px;
         border-radius: 10px;
         color: #fff;
         background-color: $night;
+        transition: all 300ms;
+        &:hover {
+          opacity: 0.8;
+        }
+      }
+      .postBtn {
+        margin: 5px;
+        padding: 12px;
+        border-radius: 10px;
+        color: #fff;
+        background-color: $red;
         transition: all 300ms;
         &:hover {
           opacity: 0.8;
@@ -54,6 +65,10 @@
         display: none;
       }
       .editPostIcon {
+        position: relative;
+        top: 8px;
+        font-size: 30px;
+        margin: 5px;
         color: $night;
         transition: all 300ms;
         &:hover {

@@ -9,7 +9,6 @@ const CommentsContainer = ({ post }) => {
   //COMPORTEMENT
   useEffect(() => {
     let token = localStorage.getItem("token");
-    console.log(post)
     const config = {
       headers: {
         Authorization: `Bearer ${token}`,

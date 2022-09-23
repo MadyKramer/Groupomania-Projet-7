@@ -3,28 +3,25 @@ const yup = require("yup");
 const signupSchema = yup.object().shape({
 
 
-  Firstname: yup.string().min(3).max(45).required("Quel est votre prénom?"),
+  Firstname: yup.string().max(45).required("Quel est votre prénom?"),
 
   Lastname: yup
     .string()
-    .min(3)
     .max(45)
     .required("Quel est votre nom de famille?"),
 
-  Workstation: yup.string().min(4).max(45).required("Quel poste occupez-vous?"),
+  Workstation: yup.string().max(45).required("Quel poste occupez-vous?"),
 
   Email: yup
     .string()
-    .matches("^[A-Za-z0-9._%+-]+@groupomania.fr$")
+    .matches(/^[a-z0-9]+@groupomania.fr$/, "Indiquez votre adresse e-mail Groupomania")
     .min(8)
     .max(150)
     .required("Veuillez nous renseigner une adresse mail 💌"),
 
   Password: yup
     .string()
-    .matches(/[a-zA-Z1-9]+/) 
-    .min(6)
-    .max(255)
+    .matches(/^.*(?=.{6,})((?=.*[!@#$%^&*()\-_=+{};:,<.>]){1})(?=.*\d)((?=.*[a-z]){1})((?=.*[A-Z]){1}).*$/, "Votre mot de passe doit contenir au moins une minuscule, une majuscule, un chiffre ainsi qu'un caractère spécial: ?=. [!@#$%^& ()- =+{};:,<.>") 
     .required("Définissez ici votre mot de passe"),
 });
 

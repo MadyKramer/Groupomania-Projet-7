@@ -1,6 +1,6 @@
 // import axios from "axios";
 
-import CreatePost from "../components/CreatePost";
+
 import PostsContainer from "../components/PostsContainer";
 
 const Main = () => {
@@ -11,8 +11,7 @@ const Main = () => {
   //RENDER
   return (
     <div>
-      
-      {/* <CreatePost /> */}
+
       <PostsContainer />
     </div>
   );

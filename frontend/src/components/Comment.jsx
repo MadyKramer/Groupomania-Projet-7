@@ -5,11 +5,14 @@ import {
   faTrashCan,
   faPenToSquare,
 } from "@fortawesome/free-solid-svg-icons";
+import EditComment from './EditComment';
 
 const Comment = ({ comment, post }) => {
   //== props.comment
+  console.log(comment)
   //STATE
   const [errorMsg, setErrorMsg] = useState("");
+  const [displayModale, setDisplayModale] = useState(false);
   //COMPORTEMENT
   const token = localStorage.getItem("token");
   const handleDeleteComment = () => {
@@ -37,9 +40,10 @@ const Comment = ({ comment, post }) => {
           <p>
             {comment.firstname} {comment.lastname}
           </p>
+          {displayModale && <EditComment post={post} comment={comment} closeModale={setDisplayModale}/>  }
         </div>
         <div className="handleCommentsIcons">
-          <FontAwesomeIcon icon={faPenToSquare} className="handleComment" />
+          <FontAwesomeIcon icon={faPenToSquare} className="handleComment" onClick= {() => setDisplayModale(true)}/>
           <FontAwesomeIcon
             icon={faTrashCan}
             className="handleComment"
