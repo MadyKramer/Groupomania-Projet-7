@@ -49,7 +49,7 @@ exports.edit = (req, res, next) => {
           [req.body.commentcontent, req.params.comments_id],
           (err, result, fields) => {
             if (err) {
-              return res.status(400).json({message: err.sqlMessage});
+              return res.status(400).json({message: "Une erreur est survenue"});
             } else {
               return res.status(200).json({ message: "Commentaire modifié!✨" });
             }

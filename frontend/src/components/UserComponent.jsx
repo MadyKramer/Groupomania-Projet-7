@@ -32,7 +32,7 @@ const UserComponent = () => {
         </div>
       </div>
       <div className="handleAccount">
-        <button className="disconect handleAccountBtn" onClick={Logout} aria-label="Se déconnecter">Se déconnecter</button>
+        <button className="disconect handleAccountBtn" onClick={Logout} aria-label="Se déconnecter">Déconnexion</button>
       </div>
     </div>
   );

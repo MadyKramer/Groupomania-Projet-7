@@ -13,13 +13,14 @@
   margin-right: auto;
   border: 2px solid $night;
   border-radius: 20px;
-  height: 90%;
+  height: auto;
   label {
     color: $night;
     font-size: 16px;
   }
+  //PC
   @media screen and (min-width : 1224px){
-    padding: 4%;
+    width: 60%;
   }
   
   .loginBtn {
@@ -52,9 +53,16 @@
     &::placeholder {
       color: $night;
       font-size: 18px;
+    }
+    //Smartphone
       @media screen and (max-width: 600px){
         font-size: 14px;
+        
       }
+      //Tablette & Smartphone
+      @media screen and (max-width: 1223px){
+        margin: 5%;
+      
     }
     
   }

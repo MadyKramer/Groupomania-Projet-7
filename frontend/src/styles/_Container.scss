@@ -1,7 +1,7 @@
 @import "./_variables";
 
-body > #root > .bigContainer {
-  height: 100vh;
+body > #root > div > .bigContainer {
+  min-height: 100vh;
   width: 100%;
 }
 
@@ -9,13 +9,20 @@ body > #root > .bigContainer {
   background-color: $red;
   display: flex;
   justify-content: center;
-
+  height: auto;
+  
+ 
   .whiteLogo{
 
     height: 150px;
     width: 150px;
     position: absolute;
     left: 86%;
+    //Tablette et Smartphone
+    @media screen and (max-width: 1223px){
+     display: none;
+    
+  }
  
   }
 
@@ -31,11 +38,12 @@ body > #root > .bigContainer {
     @media screen and (min-width: 601px) and (max-width: 1223px) {
       padding-top: 5%;
       width: 70%;
+    
     }
     //Smartphones
     @media screen and (max-width: 600px) {
       width: 100%;
-      padding-top: 10%;
+      padding-top: 5%;
     }
     .logoLog {
       margin-left: auto;
@@ -45,21 +53,20 @@ body > #root > .bigContainer {
     .logBtns {
       display: flex;
       justify-content: center;
-      margin-bottom: 0%;
     }
     .logBtn {
       color: $night;
       font-size: 20px;
       font-weight: bold;
-      padding: 2%;
-      width: 35%;
+      padding: 1%;
+      width: 25%;
       background-color: $chamalow;
       border: none;
       border-top: 2px solid $night;
       border-left: 2px solid $night;
       border-right: 2px solid $night;
       border-radius: 15px 15px 0% 0%;
-      margin: 5% 5% 0% 5%;
+      margin: 3% 3% 0% 3%;
       transition-duration: 400ms;
       &:hover {
         opacity: 0.8;
@@ -68,6 +75,9 @@ body > #root > .bigContainer {
       }
       @media screen and (max-width: 600px) {
         font-size: 16px;
+      }
+      @media screen and (min-width : 1224px){
+        width: 20%;
       }
     }
   }

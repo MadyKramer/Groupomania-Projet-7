@@ -7,7 +7,6 @@
   justify-content: flex-start;
   align-items: center;
 
-
   @media screen and (min-width: 1224px) {
     position: absolute;
     right: 82%;
@@ -16,41 +15,70 @@
     position: absolute;
     right: 84%;
   }
-  @media screen and (max-width: 600px) {
-    display: none;
-  }
+
   .userPic {
     width: 60%;
-
     border-radius: 50%;
+    @media screen and (max-width: 600px) {
+      display: none;
+    }
   }
   .userProperties {
-
     display: flex;
     flex-direction: column;
     align-items: center;
     color: white;
     text-align: center;
-    .userName{
-        font-size: 20px;
+
+    .userName {
+      font-size: 20px;
+      @media screen and (max-width: 1223px) {
+        font-size: 14px;
+      }
+      @media screen and (max-width: 600px) {
+        display: none;
+      }
     }
-    .userWork{
-        position: relative;
-        bottom: 30px;
-        font-size: 16px;
+    .userWork {
+      position: relative;
+      bottom: 30px;
+      font-size: 16px;
+      @media screen and (max-width: 1223px) {
+        font-size: 14px;
+      }
+      @media screen and (max-width: 600px) {
+        display: none;
+      }
     }
   }
-  .handleAccount{
+  .handleAccount {
     margin-top: 10%;
     display: flex;
     flex-direction: column;
-   .handleAccountBtn{
-    background-color: #fff;
-    margin-bottom: 10%;
-    border: 2px solid $night;
-    border-radius: 10px;
-    padding: 10px;
-    cursor: pointer;
-   }
+    .handleAccountBtn {
+      background-color: #fff;
+      margin-bottom: 10%;
+      border: 2px solid $night;
+      border-radius: 10px;
+      padding: 3%;
+      cursor: pointer;
+      width: 100px;
+      //Tablette & Smartphones
+      @media screen and (max-width: 1223px) {
+        padding: 3%;
+        font-size: 12px;
+        width: 76px;
+      }
+      //Smartphones
+      @media screen and (max-width: 600px) {
+        position: relative;
+        bottom: 40px;
+        right: 20px;
+        background-color: $red;
+        color: #fff;
+   
+      }
+     
+    }
   }
 }

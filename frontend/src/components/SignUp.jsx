@@ -61,7 +61,7 @@ const SignUp = () => {
         onChange={(e) => setFirstName(e.target.value)}
         value={firstname}
       />
-      <br />
+
       <label htmlFor="lastName"> Nom </label>
       <input
         name="lastName"
@@ -74,7 +74,7 @@ const SignUp = () => {
         value={lastname}
       />
 
-      <br />
+ 
       <label htmlFor="workstation">Poste Occupé</label>
       <input
         name="workStation"
@@ -87,7 +87,7 @@ const SignUp = () => {
         value={workstation}
       />
 
-      <br />
+  
       <label htmlFor="email">Email</label>
       <input
         name="email"
@@ -100,7 +100,6 @@ const SignUp = () => {
         value={email}
       />
 
-      <br />
       <label htmlFor="password">Mot de passe</label>
       <input
         name="password"
@@ -112,7 +111,7 @@ const SignUp = () => {
         onChange={(e) => setPassword(e.target.value)}
         value={password}
       />
-      <br />
+  
       <input type="submit" value="Inscription" className="loginBtn" aria-label="Envoyer"></input>
     </form>
   );

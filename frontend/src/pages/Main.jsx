@@ -11,7 +11,6 @@ const Main = () => {
   //RENDER
   return (
     <div>
-
       <PostsContainer />
     </div>
   );

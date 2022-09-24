@@ -57,7 +57,6 @@ exports.delete = (req, res, next) => {
           .json({ message: "La publication n'existe plus" });
       } else {
         if (result[0].image !== undefined) {
-          //null ne fonctionne pas!
           //Et qu'il y a une image
 
           const fileName = result[0].postimg.split("images/")[1];

@@ -1,35 +1,54 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
+import { UserContext } from "../utils/Context";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faTrashCan,
-  faPenToSquare,
-} from "@fortawesome/free-solid-svg-icons";
-import EditComment from './EditComment';
+import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import EditComment from "./EditComment";
 
 const Comment = ({ comment, post }) => {
   //== props.comment
-  console.log(comment)
+
   //STATE
   const [errorMsg, setErrorMsg] = useState("");
   const [displayModale, setDisplayModale] = useState(false);
+  const context = useContext(UserContext);
   //COMPORTEMENT
   const token = localStorage.getItem("token");
   const handleDeleteComment = () => {
-   
     axios
-    .delete(`${process.env.REACT_APP_API_URL}api/posts/${post.id}/comments/${comment.id}`, {
-      headers: { Authorization: `Bearer ${token}` },
-      
-    })
-    .then(res => {
-      alert("commentaire supprimé ! ✨");
-      window.location.reload()
-    })
-    .catch((err) => {
-      setErrorMsg(err);
-  
-    });
+      .delete(
+        `${process.env.REACT_APP_API_URL}api/posts/${post.id}/comments/${comment.id}`,
+        {
+          headers: { Authorization: `Bearer ${token}` },
+        }
+      )
+      .then((res) => {
+        alert("commentaire supprimé ! ✨");
+        window.location.reload();
+      })
+      .catch((err) => {
+        setErrorMsg(err);
+      });
+  };
+  console.log(context);
+  let handleComments = null;
+  if (context.isAdmin === 1 || context.userId === comment.users_id) {
+    handleComments = (
+      <div className="handleCommentsIcons">
+        <FontAwesomeIcon
+          icon={faPenToSquare}
+          className="handleComment"
+          onClick={() => setDisplayModale(true)}
+        />
+        <FontAwesomeIcon
+          icon={faTrashCan}
+          className="handleComment"
+          onClick={handleDeleteComment}
+        />
+      </div>
+    );
+  } else {
+    handleComments = "";
   }
 
   //RENDER
@@ -40,19 +59,18 @@ const Comment = ({ comment, post }) => {
           <p>
             {comment.firstname} {comment.lastname}
           </p>
-          {displayModale && <EditComment post={post} comment={comment} closeModale={setDisplayModale}/>  }
+          {displayModale && (
+            <EditComment
+              post={post}
+              comment={comment}
+              closeModale={setDisplayModale}
+            />
+          )}
         </div>
-        <div className="handleCommentsIcons">
-          <FontAwesomeIcon icon={faPenToSquare} className="handleComment" onClick= {() => setDisplayModale(true)}/>
-          <FontAwesomeIcon
-            icon={faTrashCan}
-            className="handleComment"
-            onClick={handleDeleteComment}
-            
-          />
-        </div>
+          {handleComments}
       </div>
       <div className="commentContent">
+        
         <p>{comment.commentcontent}</p>
         {errorMsg && <h3>{errorMsg}</h3>}
       </div>
