@@ -14,9 +14,11 @@ import frenchStrings from "react-timeago/lib/language-strings/fr";
 import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 import CommentsContainer from "./CommentsContainer";
 import axios from "axios";
+import { toast } from 'react-toastify'
 import EditPost from "./EditPost";
+import { getDatas } from "../utils/getDatas";
 
-const Post = ({ post }) => {
+const Post = ({ post, setPostList }) => {
   //destructuring pour arriver directement à l'entrée de l'obj == props.post
 
   //STATE
@@ -24,7 +26,6 @@ const Post = ({ post }) => {
   const [showComments, setShowComments] = useState(false);
   const [like, setLike] = useState(false);
   const [isLiked, setisLiked] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
   const [commentcontent, setCommentContent] = useState("");
   const [userId, setUserId] = useState("");
   const context = useContext(UserContext);
@@ -45,11 +46,12 @@ const Post = ({ post }) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        alert("publication supprimée!");
-        window.location.reload();
+        getDatas(setPostList)
+        toast.success('Poste supprimé! 😁')
+
       })
       .catch((err) => {
-        setErrorMsg(err);
+        toast.error("Oups, quelque chose s'est mal passé! 🤔")
       });
   };
 
@@ -68,12 +70,12 @@ const Post = ({ post }) => {
         }
       )
       .then((res) => {
-        console.log("commentaire posté!");
+        getDatas(setPostList)
+        toast.success('Commentaire posté 😁')
         setUserId("");
       })
       .catch((err) => {
-        console.log("fail");
-        console.log(err);
+        toast.error("Une erreur est survenue")
       });
   };
 
@@ -123,7 +125,7 @@ const Post = ({ post }) => {
   }
   //RENDER
   return (
-    <div className="post">
+    <section className="post">
       <div className="postHeader">
         <div className="userInfos">
           {/* <img src={post.avatar} alt="userpicture" /> */}
@@ -153,7 +155,6 @@ const Post = ({ post }) => {
           {displayModale && (
             <EditPost data={post} closeModale={setDisplayModale} />
           )}
-          {errorMsg && <h3>{errorMsg}</h3>}
         </div>
         <div className="postReacts">
           <FontAwesomeIcon
@@ -188,8 +189,8 @@ const Post = ({ post }) => {
           </button>
         </div>
       </div>
-      {showComments && <CommentsContainer post={post} />}
-    </div>
+      {showComments && <CommentsContainer post={post} setPostList={setPostList} />}
+    </section>
   );
 };
 

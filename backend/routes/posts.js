@@ -16,6 +16,3 @@ router.get("/:post_id/like", auth, postsCtrl.getLike);
 
 
 module.exports = router;
-
-//POST GET ALL DELETE PUT 
-//IMG DEFAULT FRONT

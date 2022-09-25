@@ -23,6 +23,21 @@
       display: none;
     }
   }
+  .labelAvatar{
+    margin-top: 6px;
+   padding: 4px 10px;
+    line-height: 25px;
+    text-align: center;
+    font-size: 14px;
+    background-color: #fff;
+    color: $night;
+    border: 2px solid $night;
+    border-radius: 25px;
+    cursor: pointer;
+  }
+  .addAvatar{
+    display: none;
+  }
   .userProperties {
     display: flex;
     flex-direction: column;

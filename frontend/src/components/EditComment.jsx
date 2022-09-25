@@ -1,10 +1,10 @@
 import axios from "axios";
 import { useState } from "react";
 import { createPortal } from "react-dom";
-
+import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faXmark } from "@fortawesome/free-solid-svg-icons";
-import { useEffect } from "react";
+
 
 const EditComment = ({ post, comment, closeModale }) => {
   //STATE
@@ -35,11 +35,11 @@ const EditComment = ({ post, comment, closeModale }) => {
         }
       )
       .then((res) => {
-        alert("commentaire modifiée!");
+        toast.success("commentaire modifié!");
         window.location.reload();
       })
       .catch((err) => {
-        console.log("Une erreur s'est produite");
+        toast.error("Une erreur s'est produite");
       });
   };
 

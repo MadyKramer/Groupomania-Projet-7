@@ -1,70 +1,30 @@
-import { useState, useContext } from "react";
+import { useContext } from "react";
 import { UserContext } from "../utils/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
-import axios from "axios";
 
-const CreatePost = ({ setReload, reload }) => {
+const CreatePost = ({ handleCreatePost, content, postimg, setContent, setPostImg }) => {
   //STATE
-  const [errorMsg, setErrorMsg] = useState("");
-  const [postimg, setPostImg] = useState("");
-  const [content, setContent] = useState("");
-  const {
-    userId,
-    userFirstname,
-    userLastname,
-    userWorkstation,
-    isOnline,
-    setisOnline,
-  } = useContext(UserContext);
-
+  const { userFirstname } = useContext(UserContext);
   //COMPORTEMENTS
-  const token = localStorage.getItem("token");
-
-  const handleCreatePost = (e) => {
-    e.preventDefault();
-
-    let postCreate = { content, postimg };
-    console.log(postimg);
-    if (postimg.length > 0) {
-      console.log(postimg);
-      postCreate = new FormData();
-      postCreate.append("image", postimg[0]);
-      postCreate.append("content", content);
-    }
-    axios
-      .post(`${process.env.REACT_APP_API_URL}api/posts`, postCreate, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => {
-        setContent("");
-        setPostImg("");
-        setReload(true);
-        window.location.reload();
-      })
-      .catch((err) => {
-        setErrorMsg(err);
-      });
-  };
   let postPossibility = null;
   if (!content && !postimg) {
-    postPossibility = 
-     ""
-  
+    postPossibility = "";
   } else {
     postPossibility = (
-    <input
-      onClick={handleCreatePost}
-      type="submit"
-      value="Postez!"
-      className="postBtn"
-      aria-label="Envoyer "
-    ></input>);
+      <input
+        onClick={handleCreatePost}
+        type="submit"
+        value="Postez!"
+        className="postBtn"
+        aria-label="Envoyer"
+      ></input>
+    );
   }
   //RENDER
   return (
     <div>
-      <div className="createPostContainer">
+      <section className="createPostContainer">
         <div className="createPostContent">
           <form
             action=""
@@ -102,12 +62,11 @@ const CreatePost = ({ setReload, reload }) => {
                 </label>
               </span>
 
-            {postPossibility}
+              {postPossibility}
             </div>
           </form>
         </div>
-        {errorMsg && <h3>{errorMsg}</h3>}
-      </div>
+      </section>
     </div>
   );
 };

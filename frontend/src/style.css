@@ -479,6 +479,21 @@ body > #root > div > .bigContainer {
     display: none;
   }
 }
+.divUser .labelAvatar {
+  margin-top: 6px;
+  padding: 4px 10px;
+  line-height: 25px;
+  text-align: center;
+  font-size: 14px;
+  background-color: #fff;
+  color: #4E5166;
+  border: 2px solid #4E5166;
+  border-radius: 25px;
+  cursor: pointer;
+}
+.divUser .addAvatar {
+  display: none;
+}
 .divUser .userProperties {
   display: flex;
   flex-direction: column;

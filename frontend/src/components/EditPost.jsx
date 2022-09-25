@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { createPortal } from "react-dom";
-
+import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faXmark } from "@fortawesome/free-solid-svg-icons";
 
@@ -25,31 +25,31 @@ const EditPost = ({ data, closeModale }) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        alert("publication modifiée!");
+        toast.success("publication modifiée!");
         window.location.reload();
+      })
+      .catch((err) => {
+        toast.error("Une erreur s'est produite");
+      });
+  };
+
+  const handleDeleteImg = (e) => {
+    let body = {
+      image: "",
+      content: editContent,
+    };
+
+    axios
+      .put(`${process.env.REACT_APP_API_URL}api/posts/${data.id}`, body, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => {
+        alert("publication modifiée!");
       })
       .catch((err) => {
         console.log("Une erreur s'est produite");
       });
   };
-
-  // const handleDeleteImg = (e) => {
-  //   let body = {
-  //     image: "",
-  //     content: editContent,
-  //   };
-
-  //   axios
-  //     .put(`${process.env.REACT_APP_API_URL}api/posts/${data.id}`, body, {
-  //       headers: { Authorization: `Bearer ${token}` },
-  //     })
-  //     .then((res) => {
-  //       alert("publication modifiée!");
-  //     })
-  //     .catch((err) => {
-  //       console.log("Une erreur s'est produite");
-  //     });
-  // };
 
   //RENDER
 

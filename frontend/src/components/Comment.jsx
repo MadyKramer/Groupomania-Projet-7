@@ -4,12 +4,14 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import EditComment from "./EditComment";
+import { toast } from 'react-toastify'
+import { getDatas } from "../utils/getDatas";
 
-const Comment = ({ comment, post }) => {
+const Comment = ({ comment, post, setPostList }) => {
   //== props.comment
 
   //STATE
-  const [errorMsg, setErrorMsg] = useState("");
+
   const [displayModale, setDisplayModale] = useState(false);
   const context = useContext(UserContext);
   //COMPORTEMENT
@@ -23,11 +25,12 @@ const Comment = ({ comment, post }) => {
         }
       )
       .then((res) => {
-        alert("commentaire supprimé ! ✨");
-        window.location.reload();
+        getDatas(setPostList);
+        toast.success("commentaire supprimé ! ✨");
+
       })
       .catch((err) => {
-        setErrorMsg(err);
+        toast.error("Oups, quelque chose s'est mal passé! 🤔")
       });
   };
   console.log(context);
@@ -72,7 +75,6 @@ const Comment = ({ comment, post }) => {
       <div className="commentContent">
         
         <p>{comment.commentcontent}</p>
-        {errorMsg && <h3>{errorMsg}</h3>}
       </div>
     </div>
   );

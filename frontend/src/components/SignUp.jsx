@@ -49,7 +49,6 @@ const SignUp = () => {
       id="SignUpForm"
     >
      <div className="errorMessage"></div>
-      {/* <input name="avatar" id="avatar" className="avatar" type="file" /> */}
       <label htmlFor="firstName"> Prénom </label>
       <input
         name="firstName"

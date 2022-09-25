@@ -1,52 +1,86 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 // import { UserContext } from '../utils/Context'
 import UserComponent from "./UserComponent";
 import axios from "axios";
 import Post from "./Post";
 import CreatePost from "./CreatePost";
-import whitelogo from "./../assets/icon-left-font-monochrome-white.png"
-
-
+import whitelogo from "./../assets/icon-left-font-monochrome-white.png";
+import { toast } from "react-toastify";
+import React from "react";
+import { getDatas } from "../utils/getDatas";
 
 const PostsContainer = () => {
   //STATES
   const [postList, setPostList] = useState([]);
-  const [reload, setReload] = useState(true);
+  const [postimg, setPostImg] = useState("");
+  const [content, setContent] = useState("");
 
   //COMPORTEMENT
+  let token = localStorage.getItem("token");
+  const config = {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  };
+  console.log("MaJ");
+ 
+  useEffect(() => getDatas(setPostList), []);
 
-  useEffect(() => {
-    let token = localStorage.getItem("token");
 
-    const config = {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    };
+
+  const handleCreatePost = (e) => {
+    e.preventDefault();
+
+    let postCreate = { content, postimg };
+console.log(postimg[0])
+    if (postimg.length > 0) {
+      postCreate = new FormData();
+      postCreate.append("image", postimg[0]);
+      postCreate.append("content", content);
+      
+    }
     axios
-      .get(`${process.env.REACT_APP_API_URL}api/posts/getAll`, config)
+      .post(`${process.env.REACT_APP_API_URL}api/posts`, postCreate, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
       .then((res) => {
-        setPostList(res.data);
-        setReload(false);
+        setContent("");
+        setPostImg("");
+        getDatas(setPostList);
+        toast.success("Votre poste est bien publié!");
+      })
+      .catch((err) => {
+        toast.error("On dirait qu'il y a une erreur");
       });
-  }, [setReload]);
-
+  };
+  console.log(postList)
   //RENDER
   return (
     <div>
       <div className="bigContainer">
         <UserComponent />
         <img src={whitelogo} alt="white logo" className="whiteLogo" />
-        <div className="mainWrapper">
-          <CreatePost setReload={setReload} reload={reload} />
+        <main className="mainWrapper">
+          <CreatePost
+            handleCreatePost={handleCreatePost}
+            content={content}
+            postimg={postimg}
+            setContent={setContent}
+            setPostImg={setPostImg}
+          />
           {postList.length > 0 &&
             postList
               .sort((a, b) => (a.postdate > b.postdate ? -1 : 1))
               .map((post, indexPost) => (
-                <Post post={post} key={post.id} indexPost={indexPost} className="index" />
-              
+                <Post
+                  post={post}
+                  key={post.id}
+                  indexPost={indexPost}
+                  className="index"
+                  setPostList={setPostList}
+                />
               ))}
-        </div>
+        </main>
       </div>
     </div>
   );

@@ -14,7 +14,7 @@ const signupSchema = yup.object().shape({
 
   Email: yup
     .string()
-    .matches(/^[a-z0-9]+@groupomania.fr$/, "Indiquez votre adresse e-mail Groupomania")
+    .matches(/^[a-zA-Z0-9]+@groupomania.fr$/, "Indiquez votre adresse e-mail Groupomania")
     .min(8)
     .max(150)
     .required("Veuillez nous renseigner une adresse mail 💌"),
@@ -26,13 +26,13 @@ const signupSchema = yup.object().shape({
 });
 
 module.exports = (req, res, next) => {
-  console.log()
+  console.log(req.body.email)
   signupSchema
     .validate({
       Firstname: req.body.firstname,
       Lastname: req.body.lastname,
       Workstation: req.body.workstation,
-      Email: req.body.email,
+      Email: req.body.email.toLowerCase(),
       Password: req.body.password,
     })
     .then(function (valid) {

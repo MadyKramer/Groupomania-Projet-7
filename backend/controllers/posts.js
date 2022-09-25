@@ -121,12 +121,12 @@ exports.edit = (req, res, next) => {
      [req.params.post_id],
     (err, results, fields) => {
         let filename;
+        console.log(results)
         if (results.length > 0) {
            if (results[0].image != undefined) {
-              filename = results[0].image.split("images/")[1];
+              filename = results[0].image.split("images/")[1]; 
            }
            if (results[0].users_id === req.userId || hasRights === 1) {
-          
               if (req.file !== undefined) {
                  const imgUrl = `images/${req.file.filename}`;
                  if (fs.existsSync(`images/${filename}`)) {
@@ -144,7 +144,7 @@ exports.edit = (req, res, next) => {
                        if (err) {
                           return res
                              .status(400)
-                             .json({ message: err.sqlMessage });
+                             .json({ message: "Une erreur est survenue" });
                        } else {
                           return res.status(200).json(results);
                        }
@@ -163,7 +163,7 @@ exports.edit = (req, res, next) => {
                        if (err) {
                           return res
                              .status(400)
-                             .json({ message: err.sqlMessage });
+                             .json({ message: "Une erreur est survenue" });
                        } else {
                           return res.status(200).json(results);
                        }
@@ -173,7 +173,6 @@ exports.edit = (req, res, next) => {
                  database.query(
                     "UPDATE `post` SET content=? WHERE id=?",
                     [
-                  
                        req.body.content,
                        req.params.post_id,
                     ],
@@ -181,7 +180,7 @@ exports.edit = (req, res, next) => {
                        if (err) {
                           return res
                              .status(400)
-                             .json({ message: err.sqlMessage });
+                             .json({ message: "Une erreur est survenue" });
                        } else {
                           return res.status(200).json(results);
                        }
