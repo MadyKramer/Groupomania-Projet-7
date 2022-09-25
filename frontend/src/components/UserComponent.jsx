@@ -1,12 +1,13 @@
-import { useContext, useState } from "react";
+import { useContext} from "react";
 import { UserContext } from "../utils/Context";
 import { useNavigate } from "react-router-dom";
 
 const UserComponent = () => {
   //STATE
-const [postAvatar, setPostAvatar] = useState('');
+
   //COMPORTEMENT
-  console.log(postAvatar)
+  const navigate = useNavigate();
+
   const {
     userId,
     userFirstname,
@@ -16,8 +17,10 @@ const [postAvatar, setPostAvatar] = useState('');
     setIsOnline,
   } = useContext(UserContext);
   const defaultImg = require("./../assets/defaultpicture.jpg");
-  const navigate = useNavigate();
+
+
   const Logout = () => {
+   
     setIsOnline(false);
     localStorage.removeItem("token");
     navigate("/");
@@ -28,11 +31,11 @@ const [postAvatar, setPostAvatar] = useState('');
     <aside className="divUser">
       <img className="userPic" src={defaultImg} alt="avatar" />
       <label htmlFor="avatar" className="labelAvatar">Modifier mon avatar</label>
-      <input type="file" id="avatar" className="addAvatar" onChange={(e) => setPostAvatar(e.target.files)}></input>
+      <input type="file" id="avatar" className="addAvatar" /*onChange={(e) => setPostAvatar(e.target.files)}*/></input>
       <div className="userProperties">
         <div className="userName">
           <p tabIndex="0">
-            {userLastname} {userFirstname}
+           {userFirstname} {userLastname} 
           </p>
         </div>
         <div className="userWork">

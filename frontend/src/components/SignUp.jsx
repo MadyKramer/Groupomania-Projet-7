@@ -1,5 +1,6 @@
 import axios from "axios";
 import { useState } from "react";
+import { toast } from 'react-toastify'
 import { useNavigate } from "react-router-dom";
 
 //STATE
@@ -29,7 +30,7 @@ const SignUp = () => {
       data,
     })
       .then((res) => {
-        alert(
+        toast.success(
           "Vous êtes bien enregistré(e)! Veuillez vous connecter pour avoir accès à votre espace"
         );
       })

@@ -6,7 +6,7 @@ const auth = require("../middlewares/auth");
 const multer = require("../middlewares/multer-config")
 
 router.get("/:user_id", auth, profilesCtrl.getProfile);
-// router.put("/:user_id", auth, multer, profilesCtrl.editProfile);
+router.put("/:user_id", auth, multer, profilesCtrl.editProfile);
 
 
 

@@ -41,7 +41,7 @@ const App = () => {
 
   useEffect(() => {
     checkToken();
-  }, [isOnline]); //?
+  }, [isOnline]); 
 
   //RENDER
 

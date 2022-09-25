@@ -44,7 +44,7 @@ const EditPost = ({ data, closeModale }) => {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
-        alert("publication modifiée!");
+        toast.success("Image supprimée!")
       })
       .catch((err) => {
         console.log("Une erreur s'est produite");
