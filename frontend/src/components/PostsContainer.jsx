@@ -27,7 +27,7 @@ const PostsContainer = () => {
     e.preventDefault();
 
     let postCreate = { content, postimg };
-console.log(postimg[0])
+
     if (postimg.length > 0) {
       postCreate = new FormData();
       postCreate.append("image", postimg[0]);
@@ -48,7 +48,7 @@ console.log(postimg[0])
         toast.error("On dirait qu'il y a une erreur");
       });
   };
-  console.log(postList)
+
   //RENDER
   return (
     <div>

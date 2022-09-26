@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
+
 const Login = () => {
   //STATE
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ const Login = () => {
 
   //COMPORTEMENTS
   const navigate = useNavigate();
+  
   const handleLogin = (e) => {
     e.preventDefault();
     const emailError = document.querySelector(".email.error");
@@ -26,10 +28,11 @@ const Login = () => {
         localStorage.setItem("token", res.data.token);
         navigate("/feed");
       })
+      
       .catch((err) => {
-        console.log(err.response);
+
         emailError.innerHTML = err.response.data.message;
-        console.log(err.response.data.message)
+
       });
   };
 

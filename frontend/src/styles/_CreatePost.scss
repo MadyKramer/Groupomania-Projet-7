@@ -28,8 +28,12 @@
       display: flex;
       justify-content: space-between;
       width: 100%;
+     
       @media screen and (max-width: 600px) {
         height: 70px;
+      }
+      .hidden{
+        display: none;
       }
       .createPostInput {
         border-style: none;
@@ -52,6 +56,7 @@
         justify-content: flex-end;
         .sendImg{
           display: none;
+         
         }
 
         .createPostIcon {

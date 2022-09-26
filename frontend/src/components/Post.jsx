@@ -123,12 +123,24 @@ const Post = ({ post, setPostList }) => {
   } else {
     handleBtn = "";
   }
+
+  let commentPossibility=null;
+  if (!commentcontent){
+    commentPossibility="";
+  }else{
+    commentPossibility= <button
+    className="commentButton"
+    aria-label="envoyer le commentaire"
+    onClick={sendComment}
+  >
+    Envoyer
+  </button>
+  }
   //RENDER
   return (
     <section className="post">
       <div className="postHeader">
         <div className="userInfos">
-          {/* <img src={post.avatar} alt="userpicture" /> */}
           <p tabIndex="0">
             {post.firstname} {post.lastname}
           </p>
@@ -153,7 +165,7 @@ const Post = ({ post, setPostList }) => {
           )}
           <p>{post.content}</p>
           {displayModale && (
-            <EditPost data={post} closeModale={setDisplayModale} />
+            <EditPost data={post} closeModale={setDisplayModale} /*setPostList={setPostList}*/ />
           )}
         </div>
         <div className="postReacts">
@@ -180,13 +192,7 @@ const Post = ({ post, setPostList }) => {
             placeholder="Ajouter un commentaire..."
             onChange={(e) => setCommentContent(e.target.value)}
           ></input>
-          <button
-            className="commentButton"
-            aria-label="envoyer le commentaire"
-            onClick={sendComment}
-          >
-            Envoyer
-          </button>
+         {commentPossibility}
         </div>
       </div>
       {showComments && <CommentsContainer post={post} setPostList={setPostList} />}

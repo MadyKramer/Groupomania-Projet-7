@@ -3,7 +3,7 @@ import { useState } from "react";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
 
-const Auth = () => { //Formulaire controlé? React-hook-form
+const Auth = ({user, setUser}) => { 
   const [formDisplaying, setformDisplaying] = useState(true);
   const handleSignUp = () => {
     if (formDisplaying === true) {
@@ -20,7 +20,7 @@ const Auth = () => { //Formulaire controlé? React-hook-form
       <div className="mainWrapper">
         <img
           className="logoLog"
-          src={require("./../assets/groupo-slim.png")} //Importer logo et le mettre dans une var? 
+          src={require("./../assets/groupo-slim.png")}
           alt={"Logo Groupomania"}
         />
         <div className="logBtns">
@@ -32,7 +32,7 @@ const Auth = () => { //Formulaire controlé? React-hook-form
           </button>
           
         </div>
-        {formDisplaying ? <Login /> : <SignUp />}
+        {formDisplaying ? <Login user={user} setUser={setUser} /> : <SignUp />}
       </div>
     </div>
   );

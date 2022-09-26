@@ -7,7 +7,7 @@ module.exports = (req, res, next) => {
     const token = req.headers.authorization.split(" ")[1]; //Récupère le tokken
     const decodedToken = jwt.verify(token, process.env.jwt);
     req.userId = decodedToken.userId;
-    console.log("decoded", decodedToken.userId);
+
 
     next();
   } catch {

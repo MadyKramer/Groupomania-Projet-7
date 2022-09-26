@@ -332,6 +332,9 @@ body > #root > div > .bigContainer {
     height: 70px;
   }
 }
+.createPostContainer .createPostContent .writeNews .hidden {
+  display: none;
+}
 .createPostContainer .createPostContent .writeNews .createPostInput {
   border-style: none;
   width: 80%;

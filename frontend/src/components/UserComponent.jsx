@@ -34,7 +34,6 @@ const UserComponent = () => {
   return (
     <aside className="divUser">
       <img className="userPic" src={defaultImg} alt="avatar" />
-      <input type="file" id="avatar" className="addAvatar"></input>
       <div className="userProperties">
         <div className="userName">
           <p tabIndex="0">

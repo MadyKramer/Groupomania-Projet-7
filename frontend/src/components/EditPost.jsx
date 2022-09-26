@@ -4,6 +4,7 @@ import { createPortal } from "react-dom";
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faXmark } from "@fortawesome/free-solid-svg-icons";
+// import { getDatas } from "../utils/getDatas";
 
 const EditPost = ({ data, closeModale }) => {
   //STATE
@@ -25,6 +26,8 @@ const EditPost = ({ data, closeModale }) => {
       })
       .then((res) => {
         toast.success("publication modifiée!");
+        // getDatas(setPostList)
+        window.location.reload();
       })
       .catch((err) => {
         toast.error("Une erreur s'est produite");
@@ -42,6 +45,7 @@ const EditPost = ({ data, closeModale }) => {
       })
       .then((res) => {
         toast.success("Image supprimée!")
+        
       })
       .catch((err) => {
         console.log("Une erreur s'est produite");

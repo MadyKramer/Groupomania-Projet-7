@@ -1,13 +1,13 @@
 //import logo from './logo.svg';
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import Main from "./pages/Main";
 import Auth from "./pages/Auth";
 import { UserContext } from "./utils/Context";
 import { useState, useEffect } from "react";
 import { decodeToken } from "react-jwt";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import PostsContainer from "./components/PostsContainer";
 
 const App = () => {
   //STATE
@@ -62,7 +62,7 @@ const App = () => {
         <>
           <Routes>
             <Route path="/" element={<Auth />} />
-            <Route path="feed" element={<Main />} />
+            <Route path="feed" element={<PostsContainer />} />
           </Routes>
         </>
       </UserContext.Provider>

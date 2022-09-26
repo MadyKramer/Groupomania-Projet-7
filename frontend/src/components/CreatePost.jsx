@@ -31,9 +31,10 @@ const CreatePost = ({ handleCreatePost, content, postimg, setContent, setPostImg
             className="writeNews"
             onSubmit={handleCreatePost}
             id="createPostForm"
+          
           >
-            {/* PP */}
-            <label htmlFor="createPost"></label>
+       
+            <label className="hidden" htmlFor="createPost">Ajout image</label>
             <input
               name="createPost"
               id="createPost"
@@ -53,7 +54,7 @@ const CreatePost = ({ handleCreatePost, content, postimg, setContent, setPostImg
                   aria-label="envoyer une image"
                   onChange={(e) => setPostImg(e.target.files)}
                 ></input>
-                <label htmlFor="sendImg">
+                <label aria-hidden="true" htmlFor="sendImg" ><span className="hidden">.</span>
                   <FontAwesomeIcon
                     icon={faImage}
                     tabIndex="0"
