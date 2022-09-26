@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
-// import { UserContext } from '../utils/Context'
-import UserComponent from "./UserComponent";
+import UserComponent from "../components/UserComponent";
 import axios from "axios";
-import Post from "./Post";
-import CreatePost from "./CreatePost";
+import Post from "../components/Post";
+import CreatePost from "../components/CreatePost";
 import whitelogo from "./../assets/icon-left-font-monochrome-white.png";
 import { toast } from "react-toastify";
 import React from "react";

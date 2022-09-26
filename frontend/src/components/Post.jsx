@@ -166,7 +166,7 @@ const Post = ({ post, setPostList, idUser, isAdmin }) => {
           )}
           <p>{post.content}</p>
           {displayModale && (
-            <EditPost data={post} closeModale={setDisplayModale} /*setPostList={setPostList}*/ />
+            <EditPost data={post} closeModale={setDisplayModale} />
           )}
         </div>
         <div className="postReacts">

@@ -9,7 +9,7 @@ const UserComponent = ({firstname, lastname, workstation}) => {
 
   //COMPORTEMENT
   
-  const token = localStorage.getItem("token");
+
   const navigate = useNavigate();
   const {
     setIsOnline,

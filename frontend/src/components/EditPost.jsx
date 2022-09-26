@@ -26,7 +26,6 @@ const EditPost = ({ data, closeModale }) => {
       })
       .then((res) => {
         toast.success("publication modifiée!");
-        // getDatas(setPostList)
         window.location.reload();
       })
       .catch((err) => {

@@ -4,10 +4,9 @@ import { Routes, Route } from "react-router-dom";
 import Auth from "./pages/Auth";
 import { UserContext } from "./utils/Context";
 import { useState, useEffect } from "react";
-import { decodeToken } from "react-jwt";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import PostsContainer from "./components/PostsContainer";
+import PostsContainer from "./pages/PostsContainer";
 
 const App = () => {
   //STATE
@@ -15,14 +14,7 @@ const App = () => {
   
   //COMPORTEMENT
 
-  const token = localStorage.getItem("token");
-//  const dataUser = decodeToken(token)
-
-//  console.log(dataUser.username)
- 
-
   useEffect(() => {
-    // checkToken();
   }, [isOnline]); 
 
   //RENDER

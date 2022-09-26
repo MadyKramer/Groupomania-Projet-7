@@ -1,5 +1,4 @@
-import { useContext } from "react";
-import { UserContext } from "../utils/Context";
+
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 

@@ -3,7 +3,6 @@ import axios from "axios";
 import Comment from "./Comment";
 
 const CommentsContainer = ({ post, setPostList, isAdmin, idUser }) => {
-  // == props.comment
   //STATE
   const [commentList, setCommentList] = useState([]);
   //COMPORTEMENT
