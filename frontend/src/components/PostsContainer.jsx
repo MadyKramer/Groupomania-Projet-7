@@ -17,12 +17,7 @@ const PostsContainer = () => {
 
   //COMPORTEMENT
   let token = localStorage.getItem("token");
-  const config = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-  };
-  console.log("MaJ");
+ 
  
   useEffect(() => getDatas(setPostList), []);
 

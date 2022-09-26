@@ -29,7 +29,7 @@ const Login = () => {
       .catch((err) => {
         console.log(err.response);
         emailError.innerHTML = err.response.data.message;
-        console.log(err.data.response.message)
+        console.log(err.response.data.message)
       });
   };
 
@@ -52,7 +52,7 @@ const Login = () => {
         value={email}
         autoComplete="on"
       />
-      <div className="email"></div>
+      <div className="email error"></div>
       <br />
 
       <label htmlFor="password">Mot de passe</label>
@@ -66,7 +66,7 @@ const Login = () => {
         value={password}
         autoComplete="on"
       />
-      <div className="password error"></div>
+     
       <br />
       <input type="submit" value="Connexion" className="loginBtn"></input>
     </form>

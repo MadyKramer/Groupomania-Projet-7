@@ -28,7 +28,7 @@ exports.editProfile = (req, res, next) => {
   (err, result, fields) => {
     console.log(result)
     if (req.file != undefined) {
-      console.log("image pas undefined")
+ 
       const profilePicture = `images/${req.file.filename}`;
         database.query(
           "UPDATE users SET avatar=? WHERE id=?",
@@ -43,9 +43,9 @@ exports.editProfile = (req, res, next) => {
                 profilePicture &&
                 profilePicture !== "images/defaultpicture.jpg"
               ) {
-                if (fs.existsSync(profilePicture)) {
-                  fs.unlinkSync(profilePicture);
-                }
+                // if (fs.existsSync(profilePicture)) {
+                //   fs.unlinkSync(profilePicture);
+                // }
               }
               return res
                 .status(200)

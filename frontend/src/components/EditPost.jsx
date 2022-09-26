@@ -16,7 +16,6 @@ const EditPost = ({ data, closeModale }) => {
   const handleEditPost = (e) => {
     e.preventDefault();
     let postEdit = { editContent, editImg };
-    // if (editImg.length !== 0) {
     postEdit = new FormData();
     postEdit.append("image", editImg[0]);
     postEdit.append("content", editContent);
@@ -26,7 +25,6 @@ const EditPost = ({ data, closeModale }) => {
       })
       .then((res) => {
         toast.success("publication modifiée!");
-        window.location.reload();
       })
       .catch((err) => {
         toast.error("Une erreur s'est produite");
@@ -35,12 +33,11 @@ const EditPost = ({ data, closeModale }) => {
 
   const handleDeleteImg = (e) => {
     let body = {
-      image: "",
       content: editContent,
     };
 
     axios
-      .put(`${process.env.REACT_APP_API_URL}api/posts/${data.id}`, body, {
+      .put(`${process.env.REACT_APP_API_URL}api/posts/deletepic/${data.id}`, body, {
         headers: { Authorization: `Bearer ${token}` },
       })
       .then((res) => {
@@ -97,7 +94,7 @@ const EditPost = ({ data, closeModale }) => {
                 <FontAwesomeIcon icon={faImage} tabIndex="0" aria-label="Modifier l'image" className="editPostIcon" />
               </label>
             </span>
-            <button className="deleteImgBtn" aria-label="supprimer l'image"/*onClick={(e) => handleDeleteImg()}*/>
+            <button className="deleteImgBtn" aria-label="supprimer l'image"onClick={(e) => handleDeleteImg()}>
               Supprimer l'image
             </button>
             <input type="submit" value="Postez" className="postBtn" aria-label="envoyer"></input>

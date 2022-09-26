@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 import { toast } from 'react-toastify'
-import { useNavigate } from "react-router-dom";
+
 
 //STATE
 const SignUp = () => {
@@ -37,6 +37,7 @@ const SignUp = () => {
       .catch((err) => {
         console.log(err);
         error.innerHTML = err.response.data.message;
+        
 
       });
   };

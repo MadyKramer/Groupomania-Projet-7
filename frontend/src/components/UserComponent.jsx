@@ -2,21 +2,25 @@ import { useContext} from "react";
 import { UserContext } from "../utils/Context";
 import { useNavigate } from "react-router-dom";
 
+
 const UserComponent = () => {
   //STATE
 
   //COMPORTEMENT
   const navigate = useNavigate();
-
   const {
     userId,
+
     userFirstname,
     userLastname,
     userWorkstation,
     isOnline,
     setIsOnline,
   } = useContext(UserContext);
+
   const defaultImg = require("./../assets/defaultpicture.jpg");
+
+
 
 
   const Logout = () => {
@@ -30,8 +34,7 @@ const UserComponent = () => {
   return (
     <aside className="divUser">
       <img className="userPic" src={defaultImg} alt="avatar" />
-      <label htmlFor="avatar" className="labelAvatar">Modifier mon avatar</label>
-      <input type="file" id="avatar" className="addAvatar" /*onChange={(e) => setPostAvatar(e.target.files)}*/></input>
+      <input type="file" id="avatar" className="addAvatar"></input>
       <div className="userProperties">
         <div className="userName">
           <p tabIndex="0">

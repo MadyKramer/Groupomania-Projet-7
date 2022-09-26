@@ -452,7 +452,7 @@ body > #root > div > .bigContainer {
 .divUser {
   padding-top: 30px;
   position: absolute;
-  right: 75%;
+  right: 86%;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -461,7 +461,7 @@ body > #root > div > .bigContainer {
 @media screen and (min-width: 1224px) {
   .divUser {
     position: absolute;
-    right: 82%;
+    right: 86%;
   }
 }
 @media screen and (min-width: 601px) and (max-width: 1223px) {
@@ -471,12 +471,17 @@ body > #root > div > .bigContainer {
   }
 }
 .divUser .userPic {
-  width: 60%;
+  width: 150px;
   border-radius: 50%;
 }
 @media screen and (max-width: 600px) {
   .divUser .userPic {
     display: none;
+  }
+}
+@media screen and (min-width: 601px) and (max-width: 1223px) {
+  .divUser .userPic {
+    width: 50%;
   }
 }
 .divUser .labelAvatar {
@@ -554,7 +559,7 @@ body > #root > div > .bigContainer {
   .divUser .handleAccount .handleAccountBtn {
     position: relative;
     bottom: 40px;
-    right: 20px;
+    left: 30px;
     background-color: #AE1C03;
     color: #fff;
   }
