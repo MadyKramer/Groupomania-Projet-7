@@ -18,7 +18,7 @@ import { toast } from 'react-toastify'
 import EditPost from "./EditPost";
 import { getDatas } from "../utils/getDatas";
 
-const Post = ({ post, setPostList }) => {
+const Post = ({ post, setPostList, idUser, isAdmin }) => {
   //destructuring pour arriver directement à l'entrée de l'obj == props.post
 
   //STATE
@@ -28,7 +28,7 @@ const Post = ({ post, setPostList }) => {
   const [isLiked, setisLiked] = useState(false);
   const [commentcontent, setCommentContent] = useState("");
   const [userId, setUserId] = useState("");
-  const context = useContext(UserContext);
+
 
   //COMPORTEMENT
   const formatter = buildFormatter(frenchStrings);
@@ -101,7 +101,8 @@ const Post = ({ post, setPostList }) => {
       });
   };
   let handleBtn = null;
-  if (context.isAdmin === 1 || context.userId === post.users_id) {
+  console.log(idUser)
+  if (isAdmin === 1 || idUser === post.users_id) {
     handleBtn = (
       <div className="handlePostIcons">
         <FontAwesomeIcon
@@ -195,7 +196,7 @@ const Post = ({ post, setPostList }) => {
          {commentPossibility}
         </div>
       </div>
-      {showComments && <CommentsContainer post={post} setPostList={setPostList} />}
+      {showComments && <CommentsContainer post={post} setPostList={setPostList} idUser={idUser} isAdmin={isAdmin}/>}
     </section>
   );
 };

@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import Comment from "./Comment";
 
-const CommentsContainer = ({ post, setPostList }) => {
+const CommentsContainer = ({ post, setPostList, isAdmin, idUser }) => {
   // == props.comment
   //STATE
   const [commentList, setCommentList] = useState([]);
@@ -30,7 +30,7 @@ const CommentsContainer = ({ post, setPostList }) => {
     <div className="commentsWrapper">
       {commentList.length > 0 &&
         commentList.map((comment) => (
-          <Comment post={post} comment={comment} key={comment.id} setPostList={setPostList} />
+          <Comment post={post} comment={comment} key={comment.id} setPostList={setPostList} isAdmin={isAdmin} idUser={idUser}/>
         ))}
     </div>
   );

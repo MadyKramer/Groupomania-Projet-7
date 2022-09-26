@@ -1,5 +1,6 @@
 import axios from "axios";
-export const getDatas = (setter) => {
+
+export const getDatas = (setter, navigate) => {
     let token = localStorage.getItem("token");
     const config = {
       headers: {
@@ -11,5 +12,10 @@ export const getDatas = (setter) => {
 
       .then((res) => {
         setter(res.data);
-      });
+      })
+      .catch(() => {
+        navigate('/')
+      })
+
+      
 }

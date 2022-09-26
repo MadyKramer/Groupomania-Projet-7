@@ -3,9 +3,9 @@ import { UserContext } from "../utils/Context";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 
-const CreatePost = ({ handleCreatePost, content, postimg, setContent, setPostImg }) => {
+const CreatePost = ({ handleCreatePost, content, postimg, setContent, setPostImg, userfirstname }) => {
   //STATE
-  const { userFirstname } = useContext(UserContext);
+
   //COMPORTEMENTS
   let postPossibility = null;
   if (!content && !postimg) {
@@ -41,7 +41,7 @@ const CreatePost = ({ handleCreatePost, content, postimg, setContent, setPostImg
               className="createPostInput"
               type="textarea"
               aria-label="Ecrivez votre contenu"
-              placeholder={`Quoi de neuf ${userFirstname}?`}
+              placeholder={`Quoi de neuf ${userfirstname}?`}
               onChange={(e) => setContent(e.target.value)}
               value={content}
             ></input>

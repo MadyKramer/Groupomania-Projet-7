@@ -12,35 +12,17 @@ import PostsContainer from "./components/PostsContainer";
 const App = () => {
   //STATE
   const [isOnline, setIsOnline] = useState(false);
-  const [isAdmin, setIsAdmin] = useState("");
-  const [userId, setUserId] = useState("");
-  const [userFirstname, setUserFirstname] = useState("");
-  const [userLastname, setUserLastname] = useState(" ");
-  const [userWorkstation, setUserWorkstation] = useState("");
-  const [userAvatar, setUserAvatar] = useState("");
- console.log(decodeToken());
-
+  
   //COMPORTEMENT
 
   const token = localStorage.getItem("token");
-  const decodedToken = decodeToken(token);
-  const checkToken = () => {
-    if (!decodedToken) {
-      localStorage.removeItem("token");
-      setIsOnline(false);
-    } else if (decodedToken) {
-      setUserId(decodedToken.userId);
-      setUserFirstname(decodedToken.username.firstname);
-      setUserLastname(decodedToken.username.lastname);
-      setUserAvatar(decodedToken.username.avatar);
-      setUserWorkstation(decodedToken.username.workstation);
-      setIsAdmin(decodedToken.perm);
-      setIsOnline(true);
-    }
-  };
+//  const dataUser = decodeToken(token)
+
+//  console.log(dataUser.username)
+ 
 
   useEffect(() => {
-    checkToken();
+    // checkToken();
   }, [isOnline]); 
 
   //RENDER
@@ -50,13 +32,7 @@ const App = () => {
       <UserContext.Provider
         value={{
           isOnline,
-          setIsOnline,
-          isAdmin,
-          userId,
-          userFirstname,
-          userLastname,
-          userWorkstation,
-          userAvatar,
+          setIsOnline      
         }}
       >
         <>

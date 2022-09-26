@@ -8,6 +8,8 @@ import whitelogo from "./../assets/icon-left-font-monochrome-white.png";
 import { toast } from "react-toastify";
 import React from "react";
 import { getDatas } from "../utils/getDatas";
+import { decodeToken } from "react-jwt";
+import { useNavigate } from "react-router-dom";
 
 const PostsContainer = () => {
   //STATES
@@ -17,12 +19,14 @@ const PostsContainer = () => {
 
   //COMPORTEMENT
   let token = localStorage.getItem("token");
- 
- 
-  useEffect(() => getDatas(setPostList), []);
+  const navigate = useNavigate()
 
+  useEffect(() => getDatas(setPostList, navigate), []);
 
-
+  const userInfos = decodeToken(token)
+  const {userId, perm}=userInfos
+  const {lastname, firstname, workstation} = userInfos.username
+console.log(userInfos)
   const handleCreatePost = (e) => {
     e.preventDefault();
 
@@ -53,7 +57,7 @@ const PostsContainer = () => {
   return (
     <div>
       <div className="bigContainer">
-        <UserComponent />
+        <UserComponent firstname={firstname} lastname={lastname} workstation={workstation}/>
         <img src={whitelogo} alt="white logo" className="whiteLogo" />
         <main className="mainWrapper">
           <CreatePost
@@ -62,6 +66,7 @@ const PostsContainer = () => {
             postimg={postimg}
             setContent={setContent}
             setPostImg={setPostImg}
+            userfirstname={firstname}
           />
           {postList.length > 0 &&
             postList
@@ -71,6 +76,8 @@ const PostsContainer = () => {
                   post={post}
                   key={post.id}
                   indexPost={indexPost}
+                  idUser={userId}
+                  isAdmin={perm}
                   className="index"
                   setPostList={setPostList}
                 />

@@ -3,25 +3,21 @@ import { UserContext } from "../utils/Context";
 import { useNavigate } from "react-router-dom";
 
 
-const UserComponent = () => {
+
+const UserComponent = ({firstname, lastname, workstation}) => {
   //STATE
 
   //COMPORTEMENT
+  
+  const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const {
-    userId,
-
-    userFirstname,
-    userLastname,
-    userWorkstation,
-    isOnline,
     setIsOnline,
   } = useContext(UserContext);
 
+
+ 
   const defaultImg = require("./../assets/defaultpicture.jpg");
-
-
-
 
   const Logout = () => {
    
@@ -29,7 +25,6 @@ const UserComponent = () => {
     localStorage.removeItem("token");
     navigate("/");
   };
-
   //RENDER
   return (
     <aside className="divUser">
@@ -37,11 +32,11 @@ const UserComponent = () => {
       <div className="userProperties">
         <div className="userName">
           <p tabIndex="0">
-           {userFirstname} {userLastname} 
+           {firstname} {lastname} 
           </p>
         </div>
         <div className="userWork">
-          <p tabIndex="0">{userWorkstation}</p>
+          <p tabIndex="0">{workstation}</p>
         </div>
       </div>
       <div className="handleAccount">

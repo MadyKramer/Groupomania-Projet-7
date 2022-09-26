@@ -1,5 +1,4 @@
-import { useState, useContext } from "react";
-import { UserContext } from "../utils/Context";
+import { useState} from "react";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
@@ -7,13 +6,13 @@ import EditComment from "./EditComment";
 import { toast } from 'react-toastify'
 import { getDatas } from "../utils/getDatas";
 
-const Comment = ({ comment, post, setPostList }) => {
+const Comment = ({ comment, post, setPostList, isAdmin, idUser }) => {
   //== props.comment
 
   //STATE
 
   const [displayModale, setDisplayModale] = useState(false);
-  const context = useContext(UserContext);
+
   //COMPORTEMENT
   const token = localStorage.getItem("token");
   const handleDeleteComment = () => {
@@ -33,9 +32,9 @@ const Comment = ({ comment, post, setPostList }) => {
         toast.error("Oups, quelque chose s'est mal passé! 🤔")
       });
   };
-  console.log(context);
+
   let handleComments = null;
-  if (context.isAdmin === 1 || context.userId === comment.users_id) {
+  if (isAdmin === 1 || idUser === comment.users_id) {
     handleComments = (
       <div className="handleCommentsIcons">
         <FontAwesomeIcon
