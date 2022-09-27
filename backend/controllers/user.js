@@ -56,7 +56,7 @@ exports.login = (req, res, next) => {
                   },
                   process.env.jwt,
                   {
-                    expiresIn: "12h",
+                    expiresIn: "7h",
                   }
                 ),
               });

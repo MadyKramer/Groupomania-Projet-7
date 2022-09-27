@@ -7,25 +7,26 @@ import whitelogo from "./../assets/icon-left-font-monochrome-white.png";
 import { toast } from "react-toastify";
 import React from "react";
 import { getDatas } from "../utils/getDatas";
-import { decodeToken } from "react-jwt";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const PostsContainer = () => {
   //STATES
   const [postList, setPostList] = useState([]);
   const [postimg, setPostImg] = useState("");
   const [content, setContent] = useState("");
+  const {user} = useAuthContext();
 
   //COMPORTEMENT
-  let token = localStorage.getItem("token");
-  const navigate = useNavigate()
+  // let token = localStorage.getItem("token");
+  const navigate = useNavigate();
 
-  useEffect(() => getDatas(setPostList, navigate), []);
+  useEffect(() => getDatas(setPostList, navigate), [navigate]);
 
-  const userInfos = decodeToken(token)
-  const {userId, perm}=userInfos
-  const {lastname, firstname, workstation} = userInfos.username
-console.log(userInfos)
+  // const userInfos = decodeToken(token)
+  // const {userId, perm}=userInfos
+  // const {lastname, firstname, workstation} = userInfos.username
+
   const handleCreatePost = (e) => {
     e.preventDefault();
 
@@ -39,9 +40,10 @@ console.log(userInfos)
     }
     axios
       .post(`${process.env.REACT_APP_API_URL}api/posts`, postCreate, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
+        
         setContent("");
         setPostImg("");
         getDatas(setPostList);
@@ -56,7 +58,7 @@ console.log(userInfos)
   return (
     <div>
       <div className="bigContainer">
-        <UserComponent firstname={firstname} lastname={lastname} workstation={workstation}/>
+        <UserComponent/>
         <img src={whitelogo} alt="white logo" className="whiteLogo" />
         <main className="mainWrapper">
           <CreatePost
@@ -65,7 +67,7 @@ console.log(userInfos)
             postimg={postimg}
             setContent={setContent}
             setPostImg={setPostImg}
-            userfirstname={firstname}
+            userfirstname={user.firstname}
           />
           {postList.length > 0 &&
             postList
@@ -75,8 +77,8 @@ console.log(userInfos)
                   post={post}
                   key={post.id}
                   indexPost={indexPost}
-                  idUser={userId}
-                  isAdmin={perm}
+                  idUser={user.id}
+                  isAdmin={user.hasRight}
                   className="index"
                   setPostList={setPostList}
                 />

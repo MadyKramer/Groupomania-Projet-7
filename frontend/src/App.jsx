@@ -1,39 +1,33 @@
 //import logo from './logo.svg';
 import React from "react";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom";
 import Auth from "./pages/Auth";
-import { UserContext } from "./utils/Context";
-import { useState, useEffect } from "react";
+// import { UserContext } from "./utils/Context";
+// import { useState, useEffect } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import PostsContainer from "./pages/PostsContainer";
-
+import { useAuthContext } from "./hooks/useAuthContext";
 const App = () => {
   //STATE
-  const [isOnline, setIsOnline] = useState(false);
+  // const [isOnline, setIsOnline] = useState(false);
   
   //COMPORTEMENT
-
-  useEffect(() => {
-  }, [isOnline]); 
+const {user} = useAuthContext();
+  // useEffect(() => {
+  // }, [isOnline]); 
 
   //RENDER
 
   return (
     <div>
-      <UserContext.Provider
-        value={{
-          isOnline,
-          setIsOnline      
-        }}
-      >
-        <>
+
           <Routes>
-            <Route path="/" element={<Auth />} />
-            <Route path="feed" element={<PostsContainer />} />
+            <Route path="/" element={ !user ? <Auth /> : <Navigate to="feed" />} />
+            <Route path="feed" element={ user ? <PostsContainer /> : <Navigate to="/" /> } />
           </Routes>
-        </>
-      </UserContext.Provider>
+
+     
       <ToastContainer
         position="top-right"
         autoClose={1300}

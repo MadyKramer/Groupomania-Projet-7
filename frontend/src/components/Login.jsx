@@ -1,17 +1,19 @@
 // import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
+import { decodeToken } from "react-jwt";
 import axios from "axios";
-
 
 const Login = () => {
   //STATE
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const { setUser } = useAuthContext();
 
   //COMPORTEMENTS
   const navigate = useNavigate();
-  
+
   const handleLogin = (e) => {
     e.preventDefault();
     const emailError = document.querySelector(".email.error");
@@ -26,13 +28,23 @@ const Login = () => {
     })
       .then((res) => {
         localStorage.setItem("token", res.data.token);
+        const userInfos = decodeToken(res.data.token);
+        const userLogin = {
+          id: userInfos.username.id,
+          lastname: userInfos.username.lastname,
+          firstname: userInfos.username.firstname,
+          email: userInfos.username.email,
+          workstation: userInfos.username.workstation,
+          hasright: userInfos.username.hasright,
+          avatar: userInfos.username.avatar,
+          token: res.data.token,
+        };
+        setUser(userLogin);
         navigate("/feed");
       })
-      
+
       .catch((err) => {
-
         emailError.innerHTML = err.response.data.message;
-
       });
   };
 
@@ -69,7 +81,7 @@ const Login = () => {
         value={password}
         autoComplete="on"
       />
-     
+
       <br />
       <input type="submit" value="Connexion" className="loginBtn"></input>
     </form>

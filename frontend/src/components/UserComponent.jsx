@@ -1,27 +1,18 @@
-import { useContext} from "react";
-import { UserContext } from "../utils/Context";
+
 import { useNavigate } from "react-router-dom";
+import { useAuthContext } from "../hooks/useAuthContext";
 
 
 
-const UserComponent = ({firstname, lastname, workstation}) => {
+const UserComponent = () => {
   //STATE
-
+const {user, setUser} = useAuthContext();
   //COMPORTEMENT
-  
-
   const navigate = useNavigate();
-  const {
-    setIsOnline,
-  } = useContext(UserContext);
-
-
- 
   const defaultImg = require("./../assets/defaultpicture.jpg");
 
   const Logout = () => {
-   
-    setIsOnline(false);
+    setUser(null);
     localStorage.removeItem("token");
     navigate("/");
   };
@@ -32,11 +23,11 @@ const UserComponent = ({firstname, lastname, workstation}) => {
       <div className="userProperties">
         <div className="userName">
           <p tabIndex="0">
-           {firstname} {lastname} 
+           {user.firstname} {user.lastname} 
           </p>
         </div>
         <div className="userWork">
-          <p tabIndex="0">{workstation}</p>
+          <p tabIndex="0">{user.workstation}</p>
         </div>
       </div>
       <div className="handleAccount">

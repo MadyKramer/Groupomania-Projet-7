@@ -5,22 +5,23 @@ import { faTrashCan, faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import EditComment from "./EditComment";
 import { toast } from 'react-toastify'
 import { getDatas } from "../utils/getDatas";
+import {useAuthContext} from "../hooks/useAuthContext"
 
-const Comment = ({ comment, post, setPostList, isAdmin, idUser }) => {
+const Comment = ({ comment, post, setPostList}) => {
   //== props.comment
 
   //STATE
 
   const [displayModale, setDisplayModale] = useState(false);
-
+  const {user} = useAuthContext();
   //COMPORTEMENT
-  const token = localStorage.getItem("token");
+
   const handleDeleteComment = () => {
     axios
       .delete(
         `${process.env.REACT_APP_API_URL}api/posts/${post.id}/comments/${comment.id}`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${user.token}` },
         }
       )
       .then((res) => {
@@ -34,7 +35,7 @@ const Comment = ({ comment, post, setPostList, isAdmin, idUser }) => {
   };
 
   let handleComments = null;
-  if (isAdmin === 1 || idUser === comment.users_id) {
+  if (user.hasright === 1 || user.id === comment.users_id) {
     handleComments = (
       <div className="handleCommentsIcons">
         <FontAwesomeIcon

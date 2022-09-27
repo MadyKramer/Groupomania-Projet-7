@@ -1,6 +1,5 @@
-// import ReactDOM from 'react-dom'
-import { useContext, useState } from "react";
-import { UserContext } from "../utils/Context";
+
+import { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faThumbsUp,
@@ -17,6 +16,7 @@ import axios from "axios";
 import { toast } from 'react-toastify'
 import EditPost from "./EditPost";
 import { getDatas } from "../utils/getDatas";
+import {useAuthContext} from "../hooks/useAuthContext"
 
 const Post = ({ post, setPostList, idUser, isAdmin }) => {
   //destructuring pour arriver directement à l'entrée de l'obj == props.post
@@ -25,14 +25,13 @@ const Post = ({ post, setPostList, idUser, isAdmin }) => {
   const [displayModale, setDisplayModale] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const [like, setLike] = useState(false);
-  const [isLiked, setisLiked] = useState(false);
+  const [isLiked, setisLiked] = useState(post.likeit);
   const [commentcontent, setCommentContent] = useState("");
-  const [userId, setUserId] = useState("");
+  const {user} = useAuthContext();
 
 
   //COMPORTEMENT
   const formatter = buildFormatter(frenchStrings);
-  const token = localStorage.getItem("token");
   const imgUrl = `${process.env.REACT_APP_API_URL}${post.postimg}`;
 
 
@@ -43,7 +42,7 @@ const Post = ({ post, setPostList, idUser, isAdmin }) => {
   const handleDeletePost = () => {
     axios
       .delete(`${process.env.REACT_APP_API_URL}api/posts/${post.id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
         getDatas(setPostList)
@@ -57,7 +56,7 @@ const Post = ({ post, setPostList, idUser, isAdmin }) => {
 
   const sendComment = (e) => {
     let body = {
-      userId: userId,
+      userId: user.id,
       post_id: post.id,
       commentcontent: commentcontent,
     };
@@ -66,13 +65,12 @@ const Post = ({ post, setPostList, idUser, isAdmin }) => {
         `${process.env.REACT_APP_API_URL}api/posts/${post.id}/comments`,
         body,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: { Authorization: `Bearer ${user.token}` },
         }
       )
       .then((res) => {
         getDatas(setPostList)
         toast.success('Commentaire posté 😁')
-        setUserId("");
       })
       .catch((err) => {
         toast.error("Une erreur est survenue")
@@ -81,7 +79,6 @@ const Post = ({ post, setPostList, idUser, isAdmin }) => {
 
   const handleLike = (e) => {
     let likeValue = like ? 0 : 1;
-    console.log(likeValue);
     setLike(!like);
     setisLiked((current) => !current);
   
@@ -91,7 +88,7 @@ const Post = ({ post, setPostList, idUser, isAdmin }) => {
         {
           value: likeValue,
         },
-        { headers: { Authorization: `Bearer ${token}` } }
+        { headers: { Authorization: `Bearer ${user.token}` } }
       )
       .then((res) => {
         console.log(likeValue);
@@ -101,8 +98,7 @@ const Post = ({ post, setPostList, idUser, isAdmin }) => {
       });
   };
   let handleBtn = null;
-  console.log(idUser)
-  if (isAdmin === 1 || idUser === post.users_id) {
+  if (user.hasright === 1 || user.id === post.users_id) {
     handleBtn = (
       <div className="handlePostIcons">
         <FontAwesomeIcon

@@ -2,6 +2,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 
+
 const CreatePost = ({ handleCreatePost, content, postimg, setContent, setPostImg, userfirstname }) => {
   //STATE
 

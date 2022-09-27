@@ -4,17 +4,17 @@ import { createPortal } from "react-dom";
 import { toast } from 'react-toastify'
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faXmark } from "@fortawesome/free-solid-svg-icons";
-// import { getDatas } from "../utils/getDatas";
+import {useAuthContext} from "../hooks/useAuthContext"
 
 const EditPost = ({ data, closeModale }) => {
   //STATE
   const [editContent, setEditContent] = useState(data.content);
   const [editImg, setEditImg] = useState("");
-
+  const {user} = useAuthContext();
   //COMPORTEMENT
 
   
-  const token = localStorage.getItem("token");
+
   const handleEditPost = (e) => {
     e.preventDefault();
     let postEdit = { editContent, editImg };
@@ -23,7 +23,7 @@ const EditPost = ({ data, closeModale }) => {
     postEdit.append("content", editContent);
     axios
       .put(`${process.env.REACT_APP_API_URL}api/posts/${data.id}`, postEdit, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
         toast.success("publication modifiée!");
@@ -42,7 +42,7 @@ const EditPost = ({ data, closeModale }) => {
     if(editContent !== ""){
     axios
       .put(`${process.env.REACT_APP_API_URL}api/posts/deletepic/${data.id}`, body, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: { Authorization: `Bearer ${user.token}` },
       })
       .then((res) => {
         toast.success("Image supprimée!")
@@ -70,7 +70,7 @@ const EditPost = ({ data, closeModale }) => {
           aria-label="fermer l'éditeur"
         />
         <div className="titleEdit">
-          <h2 tabIndex="0">Quoi de neuf? 😃</h2>
+          <h2 tabIndex="0">Quoi de neuf {user.firstname}? 😃</h2>
         </div>
         <label htmlFor="editPost"></label>
         <form

@@ -5,7 +5,8 @@ const env = require("dotenv").config();
 
 exports.getAll = (req, res, next) => {
   database.query(
-    "SELECT post.id,post.content,post.postdate,post.postimg,post.users_id,users.firstname,users.lastname,users.workstation,users.avatar from post INNER JOIN users ON post.users_id = users.id",
+    "SELECT post.id,post.content,post.postdate,post.postimg,post.users_id,users.firstname,users.lastname,users.workstation,users.avatar, case when likeposts.value = 1 then 1 ELSE 0 END AS likeit from post INNER JOIN users ON post.users_id = users.id LEFT JOIN likeposts ON likeposts.post_id = post.id and likeposts.users_id = ?",
+    [req.userId],
     (err, results, fields) => {
       if (err) {
         return res.status(404).json({ message: "Une erreur est survenue" });
