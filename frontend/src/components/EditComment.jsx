@@ -17,22 +17,25 @@ const EditComment = ({ post, comment, closeModale }) => {
     let body = {
       commentcontent: editContent,
     };
-
-    axios
-      .put(
-        `${process.env.REACT_APP_API_URL}api/posts/${post.id}/comments/${comment.id}`,
-        body,
-        {
-          headers: { Authorization: `Bearer ${user.token}` },
-        }
-      )
-      .then((res) => {
-        toast.success("commentaire modifié!");
-        window.location.reload();
-      })
-      .catch((err) => {
-        toast.error("Une erreur s'est produite");
-      });
+    if (editContent === "") {
+      return toast.error("Vous ne pouvez pas envoyer de contenu vide");
+    } else {
+      axios
+        .put(
+          `${process.env.REACT_APP_API_URL}api/posts/${post.id}/comments/${comment.id}`,
+          body,
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        )
+        .then((res) => {
+          toast.success("commentaire modifié!");
+          window.location.reload();
+        })
+        .catch((err) => {
+          toast.error("Une erreur s'est produite");
+        });
+    }
   };
 
   //RENDER
