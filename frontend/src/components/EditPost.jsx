@@ -13,6 +13,7 @@ const EditPost = ({ data, closeModale }) => {
 
   //COMPORTEMENT
 
+  
   const token = localStorage.getItem("token");
   const handleEditPost = (e) => {
     e.preventDefault();
@@ -34,10 +35,11 @@ const EditPost = ({ data, closeModale }) => {
   };
 
   const handleDeleteImg = (e) => {
+
     let body = {
       content: editContent,
     };
-
+    if(editContent !== ""){
     axios
       .put(`${process.env.REACT_APP_API_URL}api/posts/deletepic/${data.id}`, body, {
         headers: { Authorization: `Bearer ${token}` },
@@ -47,8 +49,12 @@ const EditPost = ({ data, closeModale }) => {
         
       })
       .catch((err) => {
-        console.log("Une erreur s'est produite");
+        toast.error("Il n'y a aucune image à supprimer")
+        
       });
+    }else{
+      alert('Votre poste ne peut pas être vide, veuillez le supprimer intégralement')
+    }
   };
 
   //RENDER
