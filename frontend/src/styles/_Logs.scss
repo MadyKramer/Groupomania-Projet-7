@@ -18,6 +18,11 @@
     color: $night;
     font-size: 16px;
   }
+  .error, .errorMessage{
+    font-weight: bold;
+    font-size: 20px;
+  }
+  
   //PC
   @media screen and (min-width : 1224px){
     width: 60%;

@@ -19,6 +19,10 @@
   color: #4E5166;
   font-size: 16px;
 }
+.formWrapper .error, .formWrapper .errorMessage {
+  font-weight: bold;
+  font-size: 20px;
+}
 @media screen and (min-width: 1224px) {
   .formWrapper {
     width: 60%;
