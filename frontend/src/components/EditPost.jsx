@@ -21,6 +21,9 @@ const EditPost = ({ data, closeModale }) => {
     postEdit = new FormData();
     postEdit.append("image", editImg[0]);
     postEdit.append("content", editContent);
+    if(editImg[0] == undefined && editContent == ""){
+      toast.error("Veuillez supprimer votre message, n'envoyez pas de poste vide!")
+    }else{
     axios
       .put(`${process.env.REACT_APP_API_URL}api/posts/${data.id}`, postEdit, {
         headers: { Authorization: `Bearer ${user.token}` },
@@ -32,8 +35,9 @@ const EditPost = ({ data, closeModale }) => {
       .catch((err) => {
         toast.error("Une erreur s'est produite");
       });
+    }
   };
-
+  
   const handleDeleteImg = (e) => {
 
     let body = {
