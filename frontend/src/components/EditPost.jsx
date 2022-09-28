@@ -1,19 +1,17 @@
 import axios from "axios";
 import { useState } from "react";
 import { createPortal } from "react-dom";
-import { toast } from 'react-toastify'
+import { toast } from "react-toastify";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage, faXmark } from "@fortawesome/free-solid-svg-icons";
-import {useAuthContext} from "../hooks/useAuthContext"
+import { useAuthContext } from "../hooks/useAuthContext";
 
 const EditPost = ({ data, closeModale }) => {
   //STATE
   const [editContent, setEditContent] = useState(data.content);
   const [editImg, setEditImg] = useState("");
-  const {user} = useAuthContext();
+  const { user } = useAuthContext();
   //COMPORTEMENT
-
-  
 
   const handleEditPost = (e) => {
     e.preventDefault();
@@ -21,43 +19,47 @@ const EditPost = ({ data, closeModale }) => {
     postEdit = new FormData();
     postEdit.append("image", editImg[0]);
     postEdit.append("content", editContent);
-    if(editImg[0] == undefined && editContent == ""){
-      toast.error("Veuillez supprimer votre message, n'envoyez pas de poste vide!")
-    }else{
-    axios
-      .put(`${process.env.REACT_APP_API_URL}api/posts/${data.id}`, postEdit, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      })
-      .then((res) => {
-        toast.success("publication modifiée!");
-        window.location.reload();
-      })
-      .catch((err) => {
-        toast.error("Une erreur s'est produite");
-      });
+    console.log(postEdit);
+    if (editContent === "" && editImg[0] === undefined) {
+      toast.error("Vous ne souhaitez pas modifier votre message?");
+    } else {
+      axios
+        .put(`${process.env.REACT_APP_API_URL}api/posts/${data.id}`, postEdit, {
+          headers: { Authorization: `Bearer ${user.token}` },
+        })
+        .then((res) => {
+          toast.success("publication modifiée!");
+          window.location.reload();
+        })
+        .catch((err) => {
+          toast.error("Une erreur s'est produite");
+        });
     }
   };
-  
-  const handleDeleteImg = (e) => {
 
+  const handleDeleteImg = (e) => {
     let body = {
       content: editContent,
     };
-    if(editContent !== ""){
-    axios
-      .put(`${process.env.REACT_APP_API_URL}api/posts/deletepic/${data.id}`, body, {
-        headers: { Authorization: `Bearer ${user.token}` },
-      })
-      .then((res) => {
-        toast.success("Image supprimée!")
-        
-      })
-      .catch((err) => {
-        toast.error("Il n'y a aucune image à supprimer")
-        
-      });
-    }else{
-      alert('Votre poste ne peut pas être vide, veuillez le supprimer intégralement')
+    if (editContent !== "") {
+      axios
+        .put(
+          `${process.env.REACT_APP_API_URL}api/posts/deletepic/${data.id}`,
+          body,
+          {
+            headers: { Authorization: `Bearer ${user.token}` },
+          }
+        )
+        .then((res) => {
+          toast.success("Image supprimée!");
+        })
+        .catch((err) => {
+          toast.error("Il n'y a aucune image à supprimer");
+        });
+    } else {
+      alert(
+        "Votre poste ne peut pas être vide, veuillez le supprimer intégralement"
+      );
     }
   };
 
@@ -82,7 +84,6 @@ const EditPost = ({ data, closeModale }) => {
           className="editWriteNews"
           onSubmit={handleEditPost}
           id="editPostForm"
-          
         >
           <input
             name="editPost"
@@ -104,13 +105,27 @@ const EditPost = ({ data, closeModale }) => {
                 onChange={(e) => setEditImg(e.target.files)}
               ></input>
               <label htmlFor="editImg">
-                <FontAwesomeIcon icon={faImage} tabIndex="0" aria-label="Modifier l'image" className="editPostIcon" />
+                <FontAwesomeIcon
+                  icon={faImage}
+                  tabIndex="0"
+                  aria-label="Modifier l'image"
+                  className="editPostIcon"
+                />
               </label>
             </span>
-            <button className="deleteImgBtn" aria-label="supprimer l'image"onClick={(e) => handleDeleteImg()}>
+            <button
+              className="deleteImgBtn"
+              aria-label="supprimer l'image"
+              onClick={(e) => handleDeleteImg()}
+            >
               Supprimer l'image
             </button>
-            <input type="submit" value="Postez" className="postBtn" aria-label="envoyer"></input>
+            <input
+              type="submit"
+              value="Postez"
+              className="postBtn"
+              aria-label="envoyer"
+            ></input>
           </div>
         </form>
       </div>
