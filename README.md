@@ -1,13 +1,22 @@
-Dans un premier terminal, entrez la commande cd backend, puis npm install, puis npm run start.
+**Groupomania**
+A social network for a company
+<br/>
+**Getting Started**
 
-Dans un second terminal, entrez la commande cd frontend, puis npm install, puis npm run start.
+In a first terminal, enter the command cd backend, then npm install, then npm run start.
 
-Un fichier .env, à la racine du dossier backend comporte les variables d'environnement que vous devez personnaliser selon votre configuration.
+In a second terminal, enter the command cd frontend, then npm install, then npm run start.
 
-Les variables username, password et bdd dépendent de votre configuration MySQL. Vous devez également insérer une chaîne de caractères et symboles aléatoires pour une variable du nom de jwt.
-Créez également un dossier images côté backend afin de pouvoir stocker les images. 
+An .env file, at the root of the backend folder contains the environment variables that you must customize according to your configuration.
 
-L'intégralité du site est disponible à l'adresse http://localhost:3000, toutefois selon l'occupation de vos ports l'accès est indiqué dans le terminal côté front.
+The username, password and bdd variables depend on your MySQL configuration. You also need to insert a string of random characters and symbols for a variable named jwt. Also create an images folder on the backend side so that you can store the images.
+
+The entire site is available at the address http://localhost:3000, however, depending on the occupation of your ports, access is indicated in the terminal on the front side.
+
+<br/>
+**Authors**
+Mady Kramer | Codebase
+Mady Kramer | UI/UX with the graphic charter to respect
 
 
 
