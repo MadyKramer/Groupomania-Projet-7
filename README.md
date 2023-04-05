@@ -11,7 +11,7 @@ The username, password and bdd variables depend on your MySQL configuration. You
 The entire site is available at the address http://localhost:3000, however, depending on the occupation of your ports, access is indicated in the terminal on the front side.
 <br/>
 <br/>
-Authors
+**Authors**
 <br/>
 Mady Kramer | Codebase <br/>
 Mady Kramer | UI/UX with the graphic charter to respect
